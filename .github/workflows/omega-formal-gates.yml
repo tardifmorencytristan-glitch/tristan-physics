@@ -40,6 +40,11 @@ jobs:
           python -m json.tool schemas/omega_theory_r1.schema.json >/dev/null
           python -m json.tool research/omega_toy_model_r1.json >/dev/null
           python -m json.tool research/omega_toy_model_r2.json >/dev/null
+          python -m json.tool research/omega_constraint_model_r1.json >/dev/null
+
+      - name: Dependency DAG and anti-circularity gate
+        run: |
+          python tools/verify_dependency_dag.py             research/omega_toy_model_r1.json             research/omega_toy_model_r2.json             research/omega_constraint_model_r1.json
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
