@@ -1,0 +1,84 @@
+{
+  "id": "omega-toy-drtr-r1",
+  "status": "GENERATED",
+  "primitives": [
+    {
+      "name": "Distinction",
+      "statement": "There exist realizations x and y such that x is not equivalent to y.",
+      "operational_definition": null,
+      "status": "AXIOM"
+    },
+    {
+      "name": "Relation",
+      "statement": "Admissible ordered or unordered relations may hold among realizations.",
+      "operational_definition": null,
+      "status": "AXIOM"
+    },
+    {
+      "name": "Transformation",
+      "statement": "Some related realizations admit composable admissible mappings.",
+      "operational_definition": null,
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "Reachability",
+      "depends_on": ["Relation", "Transformation"],
+      "statement": "y is reachable from x if there exists a finite admissible composition of transformations from x to y."
+    },
+    {
+      "name": "EquivalenceUnderReachability",
+      "depends_on": ["Reachability"],
+      "statement": "x and y are equivalent when each is reachable from the other."
+    },
+    {
+      "name": "IrreversiblePair",
+      "depends_on": ["Reachability"],
+      "statement": "x precedes y when y is reachable from x and x is not reachable from y."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "kind": "CONJECTURE",
+      "statement": "Irreversible reachability induces a strict partial order on equivalence classes under mutual reachability.",
+      "depends_on": ["Reachability", "EquivalenceUnderReachability", "IrreversiblePair"],
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "C2",
+      "kind": "CONJECTURE",
+      "statement": "A time-like ordering may be representable as an order-preserving map from the irreversible reachability quotient into an ordered set.",
+      "depends_on": ["C1"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "ReachabilityQuery",
+      "definition": "Whether an admissible path exists from x to y in a finite model.",
+      "units": null,
+      "domain": "finite toy models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F1",
+      "condition": "Construct a finite admissible model in which irreversible reachability on mutual-reachability equivalence classes fails transitivity or irreflexivity.",
+      "target_claims": ["C1"]
+    }
+  ],
+  "residual_axes": [
+    "logical_consistency",
+    "circularity",
+    "countermodel",
+    "representation_dependence"
+  ],
+  "metadata": {
+    "purpose": "Minimal formal toy model for anti-smuggling and countermodel testing.",
+    "not_physical_validation": true
+  }
+}
