@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tristan.local/schemas/omega_theory_r1.schema.json",
+  "title": "Omega Theory Candidate",
+  "type": "object",
+  "required": ["id", "status", "primitives", "definitions", "claims", "observables", "falsifiers"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "status": {
+      "type": "string",
+      "enum": ["GENERATED", "FORMALIZED", "PROVED", "SIMULATED", "MEASURED", "REPLICATED", "FALSIFIED", "SUPERSEDED", "OPEN"]
+    },
+    "primitives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "statement"],
+        "properties": {
+          "name": {"type": "string"},
+          "statement": {"type": "string"},
+          "operational_definition": {"type": ["string", "null"]},
+          "status": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "definitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "depends_on", "statement"],
+        "properties": {
+          "name": {"type": "string"},
+          "depends_on": {"type": "array", "items": {"type": "string"}},
+          "statement": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "statement", "depends_on", "status"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"enum": ["AXIOM", "DEFINITION", "LEMMA", "THEOREM", "CONJECTURE", "NO_GO", "PREDICTION"]},
+          "statement": {"type": "string"},
+          "depends_on": {"type": "array", "items": {"type": "string"}},
+          "status": {"type": "string"},
+          "evidence_refs": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "observables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "definition"],
+        "properties": {
+          "name": {"type": "string"},
+          "definition": {"type": "string"},
+          "units": {"type": ["string", "null"]},
+          "domain": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "falsifiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "condition"],
+        "properties": {
+          "id": {"type": "string"},
+          "condition": {"type": "string"},
+          "target_claims": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "residual_axes": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
