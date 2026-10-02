@@ -1,0 +1,76 @@
+{
+  "id": "omega-constraint-compression-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "StaticAdmissibility",
+      "statement": "A unary predicate A:S->{0,1} partitions states into admissible and inadmissible states.",
+      "operational_definition": "A function from a state set S to {0,1}.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "AdmissibilityAutomorphism",
+      "depends_on": ["StaticAdmissibility"],
+      "statement": "A permutation pi of S such that A(pi(s))=A(s) for every s."
+    },
+    {
+      "name": "CanonicalDerivedRelation",
+      "depends_on": ["AdmissibilityAutomorphism"],
+      "statement": "A binary relation on S invariant under every admissibility automorphism."
+    }
+  ],
+  "claims": [
+    {
+      "id": "L1",
+      "kind": "LEMMA",
+      "statement": "Every permutation preserving unary admissibility is an automorphism of the static admissibility system.",
+      "depends_on": ["StaticAdmissibility", "AdmissibilityAutomorphism"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_CONSTRAINT_RESULTS_R1.md#3-symmetry-lemma-l1"]
+    },
+    {
+      "id": "N2",
+      "kind": "NO_GO",
+      "statement": "Unary static admissibility alone cannot canonically orient a nontrivial directed reachability relation between symmetric admissible states.",
+      "depends_on": ["L1", "CanonicalDerivedRelation"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_CONSTRAINT_RESULTS_R1.md#4-no-go-n2--unary-static-admissibility-cannot-define-nontrivial-directed-reachability-canonically"]
+    },
+    {
+      "id": "C3",
+      "kind": "CONJECTURE",
+      "statement": "A weaker-than-explicit-relation structured admissibility primitive may exist that supports compositional directed dynamics without semantic smuggling.",
+      "depends_on": ["N2"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "AutomorphismOrbit",
+      "definition": "Orbit of a state under all permutations preserving unary admissibility.",
+      "units": null,
+      "domain": "finite static admissibility models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-N2",
+      "condition": "Give a canonical construction from a unary admissibility predicate alone that produces an asymmetric directed relation between states in the same admissibility automorphism orbit.",
+      "target_claims": ["N2"]
+    }
+  ],
+  "residual_axes": [
+    "symmetry",
+    "smuggling",
+    "orientation",
+    "compression_failure"
+  ],
+  "metadata": {
+    "purpose": "Test the proposed compression of Distinction/Relation/Transformation into Constraint.",
+    "result": "NAIVE_UNARY_CONSTRAINT_COMPRESSION_BLOCKED",
+    "not_physical_validation": true
+  }
+}
