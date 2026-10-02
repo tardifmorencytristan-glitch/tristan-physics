@@ -1,0 +1,119 @@
+{
+  "id": "omega-toy-drtr-r2",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "Distinction",
+      "statement": "There exist realizations x and y that are not mutually reachable.",
+      "operational_definition": "Exists x,y such that not (xRy and yRx).",
+      "status": "AXIOM"
+    },
+    {
+      "name": "Relation",
+      "statement": "A directed edge relation E may hold among realizations.",
+      "operational_definition": "E is a subset of V x V.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "Transformation",
+      "statement": "Finite compositions of admissible directed edges define reachability.",
+      "operational_definition": "R is the reflexive-transitive closure of E.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "Reachability",
+      "depends_on": ["Relation", "Transformation"],
+      "statement": "xRy iff a finite directed path, including length zero, connects x to y."
+    },
+    {
+      "name": "MutualReachability",
+      "depends_on": ["Reachability"],
+      "statement": "x~y iff xRy and yRx."
+    },
+    {
+      "name": "QuotientClass",
+      "depends_on": ["MutualReachability"],
+      "statement": "[x] is the equivalence class of x under mutual reachability."
+    },
+    {
+      "name": "StrictPrecedence",
+      "depends_on": ["Reachability", "QuotientClass"],
+      "statement": "[x]≺[y] iff xRy and not yRx."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T1",
+      "kind": "THEOREM",
+      "statement": "Strict precedence on mutual-reachability quotient classes is a strict partial order.",
+      "depends_on": ["Reachability", "MutualReachability", "QuotientClass", "StrictPrecedence"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FORMAL_RESULTS_R1.md#theorem-t1--reachability-quotient-induces-a-strict-partial-order"]
+    },
+    {
+      "id": "T2",
+      "kind": "THEOREM",
+      "statement": "For finite quotient sets, there exists an injective integer-valued order-preserving ranking.",
+      "depends_on": ["T1"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FORMAL_RESULTS_R1.md#theorem-t2--finite-quotient-admits-an-integer-valued-time-like-ranking"]
+    },
+    {
+      "id": "N1",
+      "kind": "NO_GO",
+      "statement": "No strict precedence cycle exists in the mutual-reachability quotient.",
+      "depends_on": ["T1"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FORMAL_RESULTS_R1.md#no-go-n1--no-strict-causal-cycle-survives-the-quotient"]
+    },
+    {
+      "id": "I1",
+      "kind": "THEOREM",
+      "statement": "Distinction is not necessary for T1; a singleton identity model is a witness.",
+      "depends_on": ["T1"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FORMAL_RESULTS_R1.md#independence-witness-i1--distinction-is-not-required-for-t1"]
+    }
+  ],
+  "observables": [
+    {
+      "name": "ReachabilityQuery",
+      "definition": "Whether an admissible finite path exists from x to y.",
+      "units": null,
+      "domain": "finite directed toy models"
+    },
+    {
+      "name": "QuotientRank",
+      "definition": "An integer topological rank assigned to a quotient class in a finite model.",
+      "units": null,
+      "domain": "finite quotient DAGs"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T1",
+      "condition": "Construct a model satisfying the formal R2 reachability definitions where quotient strict precedence is not irreflexive or transitive.",
+      "target_claims": ["T1"]
+    },
+    {
+      "id": "F-T2",
+      "condition": "Construct a finite strict quotient order that has no injective order-preserving map into a finite integer chain.",
+      "target_claims": ["T2"]
+    }
+  ],
+  "residual_axes": [
+    "logical_consistency",
+    "circularity",
+    "countermodel",
+    "representation_dependence",
+    "physical_interpretation"
+  ],
+  "metadata": {
+    "purpose": "First formalized Omega toy model with proved order-theoretic claims.",
+    "proof_document": "docs/OMEGA_FORMAL_RESULTS_R1.md",
+    "computational_verifier": "tools/verify_reachability_order.py",
+    "not_physical_validation": true
+  }
+}

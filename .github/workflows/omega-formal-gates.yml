@@ -1,0 +1,48 @@
+name: Omega Formal Gates
+
+on:
+  pull_request:
+    paths:
+      - "research/**"
+      - "schemas/**"
+      - "tools/**"
+      - "tests/**"
+      - "docs/OMEGA_*"
+      - ".github/workflows/omega-formal-gates.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/**"
+      - "schemas/**"
+      - "tools/**"
+      - "tests/**"
+      - ".github/workflows/omega-formal-gates.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  formal-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate JSON syntax
+        run: |
+          python -m json.tool schemas/omega_theory_r1.schema.json >/dev/null
+          python -m json.tool research/omega_toy_model_r1.json >/dev/null
+          python -m json.tool research/omega_toy_model_r2.json >/dev/null
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Exhaustive finite verifier
+        run: python tools/verify_reachability_order.py --max-n 4
