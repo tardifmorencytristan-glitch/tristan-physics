@@ -1,0 +1,36 @@
+{
+  "status": "READ_BACK_VERIFIED",
+  "date": "2026-10-03",
+  "mission": "omega_r10_observable_preservation",
+  "devices": [
+    {
+      "device": "DESKTOP-SHA9IHL",
+      "role": "GENERATOR_FORGE",
+      "artifact": "C:\\Users\\Admin\\.tristan\\missions\\omega_r10\\forge_result.json",
+      "sha256": "164c86d5ff639ca7265ed9bb3450da9856b92fbf05e67bcd07d041e4e844a75f",
+      "result": {
+        "parity_oscillation": 0,
+        "normalized_oscillation": 0.6666666666666667,
+        "normalized_max_mean_error": 0.33333333333333337
+      }
+    },
+    {
+      "device": "DESKTOP-2G1SSMT",
+      "role": "OAK_INTEGRATOR",
+      "artifact": "C:\\Users\\trist\\.tristan\\missions\\omega_r10\\oak_result.json",
+      "sha256": "d0ace3c570b3bcfffbc132d97a2bd3183b0fe9648596dc732f0cf6bc4fb01686",
+      "result": {
+        "theorems": ["T16", "T17", "T18"]
+      }
+    },
+    {
+      "device": "LAPTOP-AIU36QN6",
+      "role": "INDEPENDENT_VERIFIER",
+      "artifact": "C:\\Users\\Sonia\\.tristan\\missions\\omega_r10\\verify_result.json",
+      "sha256": "c740b4f9f321d06fdd886bf5b58ab9118f9fc987665a06570f21f0c1ed594aa8",
+      "result": {
+        "all_half_bounds_ok": true
+      }
+    }
+  ]
+}
