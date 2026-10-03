@@ -1,0 +1,102 @@
+{
+  "id": "omega-history-equivalence-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "StateSet",
+      "statement": "There is a set S of states.",
+      "operational_definition": "Finite or abstract set S.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "HistorySet",
+      "statement": "There is a set H of candidate histories.",
+      "operational_definition": "Finite or abstract set H.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "SourceTarget",
+      "statement": "Each history has source and target maps s,t:H->S.",
+      "operational_definition": "Two functions from H to S.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "HistoryAdmissibility",
+      "statement": "Each history has an admissibility predicate AH:H->{0,1}.",
+      "operational_definition": "Boolean-valued predicate on H.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "InducedRelation",
+      "depends_on": ["StateSet", "HistorySet", "SourceTarget", "HistoryAdmissibility"],
+      "statement": "xRy iff there exists admissible h with s(h)=x and t(h)=y."
+    },
+    {
+      "name": "CanonicalHistoryEncoding",
+      "depends_on": ["StateSet", "InducedRelation"],
+      "statement": "For a directed relation R, set H_R=R with source and target equal to first and second projections."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T3",
+      "kind": "THEOREM",
+      "statement": "Every typed-history system induces a directed relation.",
+      "depends_on": ["InducedRelation"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_HISTORY_RESULTS_R1.md#theorem-t3--every-typed-history-system-induces-a-directed-relation"]
+    },
+    {
+      "id": "T4",
+      "kind": "THEOREM",
+      "statement": "Every directed relation has a canonical typed-history encoding whose induced relation is exactly the original relation.",
+      "depends_on": ["CanonicalHistoryEncoding", "InducedRelation"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_HISTORY_RESULTS_R1.md#theorem-t4--every-directed-relation-has-a-canonical-history-encoding"]
+    },
+    {
+      "id": "N3",
+      "kind": "NO_GO",
+      "statement": "Primitive source/target orientation reintroduces directed relational structure and therefore does not by itself satisfy the anti-smuggling compression goal.",
+      "depends_on": ["T3", "T4"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_HISTORY_RESULTS_R1.md#no-go-n3--renaming-relation-as-typed-history-does-not-satisfy-the-anti-smuggling-goal"]
+    },
+    {
+      "id": "C4",
+      "kind": "CONJECTURE",
+      "statement": "A compositional-process primitive may add constrained structure that is not recoverable from the induced one-step relation alone.",
+      "depends_on": ["N3"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "InducedEdge",
+      "definition": "Whether at least one admissible history connects x to y.",
+      "units": null,
+      "domain": "typed-history toy models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T4",
+      "condition": "Produce a binary directed relation for which the canonical pair-history construction fails to recover the relation exactly.",
+      "target_claims": ["T4"]
+    }
+  ],
+  "residual_axes": [
+    "representation_equivalence",
+    "orientation_smuggling",
+    "composition_missing",
+    "compression"
+  ],
+  "metadata": {
+    "purpose": "Test whether typed histories genuinely compress directed relation structure.",
+    "result": "ONE_STEP_RELATION_REPRESENTATION_EQUIVALENCE",
+    "not_physical_validation": true
+  }
+}
