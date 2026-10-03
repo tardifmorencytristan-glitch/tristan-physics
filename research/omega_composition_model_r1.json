@@ -1,0 +1,102 @@
+{
+  "id": "omega-composition-information-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "StateSet",
+      "statement": "There is a set S of states.",
+      "operational_definition": "Finite or abstract set S.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "ProcessSet",
+      "statement": "There is a set H of processes.",
+      "operational_definition": "Finite or abstract set H.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "SourceTarget",
+      "statement": "Each process has source and target maps.",
+      "operational_definition": "Two functions from H to S.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "PartialComposition",
+      "statement": "Some composable process pairs have a composition result.",
+      "operational_definition": "A partial function on ordered process pairs.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "InducedRelation",
+      "depends_on": ["StateSet", "ProcessSet", "SourceTarget"],
+      "statement": "xRy iff some process has source x and target y."
+    },
+    {
+      "name": "RelationProjection",
+      "depends_on": ["InducedRelation"],
+      "statement": "Maps a process system to its induced existence relation."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T5",
+      "kind": "THEOREM",
+      "statement": "Two process systems can have identical states, processes, source/target maps, and induced relation while having distinct composition laws.",
+      "depends_on": ["SourceTarget", "PartialComposition", "InducedRelation"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_COMPOSITION_RESULTS_R1.md#t5--equal-induced-relations-do-not-determine-composition"]
+    },
+    {
+      "id": "T6",
+      "kind": "THEOREM",
+      "statement": "There is no universal reconstruction of unrestricted composition laws from induced relation alone.",
+      "depends_on": ["T5", "RelationProjection"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_COMPOSITION_RESULTS_R1.md#t6--no-universal-reconstruction-from-relation-alone"]
+    },
+    {
+      "id": "N4",
+      "kind": "NO_GO",
+      "statement": "A relation-only representation cannot distinguish composition variants sharing the same induced edge relation.",
+      "depends_on": ["T5", "T6"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_COMPOSITION_RESULTS_R1.md#n4--relation-only-representations-lose-composition-information"]
+    },
+    {
+      "id": "C5",
+      "kind": "CONJECTURE",
+      "statement": "Some composition structure may be derivable from weaker sequential or rewrite constraints without assuming full composition primitively.",
+      "depends_on": ["N4"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "CompositionOutcome",
+      "definition": "The result assigned to a composable ordered process pair.",
+      "units": null,
+      "domain": "finite compositional-process toy models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T6",
+      "condition": "Provide a relation-only reconstruction that uniquely recovers both distinct witness composition laws.",
+      "target_claims": ["T6"]
+    }
+  ],
+  "residual_axes": [
+    "composition_information",
+    "projection_loss",
+    "anti_smuggling",
+    "primitive_complexity"
+  ],
+  "metadata": {
+    "purpose": "Test whether composition contains information absent from directed relation projection.",
+    "result": "RELATION_PROJECTION_NON_INJECTIVE_FOR_COMPOSITION",
+    "not_physical_validation": true
+  }
+}
