@@ -10,6 +10,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Constraint Compression Results R1](docs/OMEGA_CONSTRAINT_RESULTS_R1.md)
 - [Ω Typed-History Results R1](docs/OMEGA_HISTORY_RESULTS_R1.md)
 - [Ω Compositional Process Results R1](docs/OMEGA_COMPOSITION_RESULTS_R1.md)
+- [Ω Free-Path Composition Results R1](docs/OMEGA_FREE_PATH_RESULTS_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -22,6 +23,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega constraint-compression model R1](research/omega_constraint_model_r1.json)
 - [Omega typed-history model R1](research/omega_history_model_r1.json)
 - [Omega compositional-process model R1](research/omega_composition_model_r1.json)
+- [Omega free-path model R1](research/omega_free_path_model_r1.json)
 
 ## Verification tools
 
@@ -29,6 +31,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_dependency_dag.py`
 - `tools/verify_history_relation_equivalence.py`
 - `tools/verify_composition_information.py`
+- `tools/verify_free_path_category.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -41,14 +44,13 @@ Proved toy-model results currently include:
 - Distinction is unnecessary for T1,
 - unary admissibility alone cannot canonically orient symmetric admissible states,
 - typed histories and directed relations are equivalent at one-step existence level,
-- primitive source/target maps do not establish deeper primitive compression,
-- induced relation does not determine process composition,
-- unrestricted composition cannot in general be reconstructed from relation projection alone.
+- arbitrary process composition is not reconstructible from relation projection alone,
+- finite directed paths generate a canonical associative composition,
+- zero-length paths generate identities,
+- arbitrary path quotients require composition-compatible congruence.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
 ## Status discipline
 
-[
-\text{Generated} \neq \text{Formalized} \neq \text{Proved} \neq \text{Measured} \neq \text{Replicated}
-]
+Generated != Formalized != Proved != Measured != Replicated
