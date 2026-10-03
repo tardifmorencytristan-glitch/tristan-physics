@@ -1,0 +1,163 @@
+{
+  "id": "omega-lattice-phi4-bridge-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "LatticeScalarAction",
+      "statement": "On an even periodic one-dimensional lattice, S(phi)=sum_i[kappa/2*(phi_(i+1)-phi_i)^2 + m2/2*phi_i^2 + lambda/4*phi_i^4].",
+      "operational_definition": "A periodic nearest-neighbor Euclidean scalar lattice action.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "BlockAverage",
+      "statement": "For N=2M, (B phi)_j=(phi_(2j)+phi_(2j+1))/2.",
+      "operational_definition": "A two-site arithmetic-mean coarse-graining map.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "FiniteSymmetricEnsemble",
+      "statement": "The finite witness configuration space is closed under phi -> -phi and weighted by exp(-S(phi)).",
+      "operational_definition": "For verification, enumerate {-1,0,1}^4 exactly.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "SecondMoment",
+      "depends_on": ["LatticeScalarAction"],
+      "statement": "M2(phi)=(1/N) sum_i phi_i^2."
+    },
+    {
+      "name": "FourthMoment",
+      "depends_on": ["LatticeScalarAction"],
+      "statement": "M4(phi)=(1/N) sum_i phi_i^4."
+    },
+    {
+      "name": "NearestNeighborCorrelation",
+      "depends_on": ["LatticeScalarAction"],
+      "statement": "C1(phi)=(1/N) sum_i phi_i phi_(i+1)."
+    },
+    {
+      "name": "BlockVariance",
+      "depends_on": ["BlockAverage"],
+      "statement": "V_B(phi) is the mean over blocks of (phi_(2j)-phi_(2j+1))^2/4."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T23",
+      "kind": "THEOREM",
+      "statement": "For every even lattice configuration, M2(phi)-M2_c(B phi)=V_B(phi).",
+      "depends_on": ["BlockAverage", "SecondMoment", "BlockVariance"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md"]
+    },
+    {
+      "id": "T24",
+      "kind": "THEOREM",
+      "statement": "The scalar action is invariant under phi->-phi and block averaging is equivariant under the same Z2 action.",
+      "depends_on": ["LatticeScalarAction", "BlockAverage"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md"]
+    },
+    {
+      "id": "T25",
+      "kind": "THEOREM",
+      "statement": "Every odd observable has zero expectation in the exact finite Z2-symmetric ensemble.",
+      "depends_on": ["T24", "FiniteSymmetricEnsemble"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md"]
+    },
+    {
+      "id": "T26",
+      "kind": "THEOREM",
+      "statement": "Ensemble averaging T23 gives <M2_fine>-<M2_coarse>=<V_B>.",
+      "depends_on": ["T23", "FiniteSymmetricEnsemble"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md"]
+    },
+    {
+      "id": "T27",
+      "kind": "THEOREM",
+      "statement": "The periodic action density equals kappa*(M2-C1)+(m2/2)*M2+(lambda/4)*M4.",
+      "depends_on": ["LatticeScalarAction", "SecondMoment", "FourthMoment", "NearestNeighborCorrelation"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md"]
+    },
+    {
+      "id": "N10",
+      "kind": "NO_GO",
+      "statement": "The two-site blocked field alone cannot reconstruct the microscopic action for all configurations.",
+      "depends_on": ["LatticeScalarAction", "BlockAverage"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md"]
+    },
+    {
+      "id": "C11",
+      "kind": "CONJECTURE",
+      "statement": "A useful induced coarse scalar-field description can be selected by minimizing residuals over symmetry-compatible effective operators while carrying an R11 propagation budget.",
+      "depends_on": ["T26", "N10"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "M2",
+      "definition": "Mean squared field.",
+      "units": "field^2",
+      "domain": "periodic scalar lattices"
+    },
+    {
+      "name": "M4",
+      "definition": "Mean fourth power of the field.",
+      "units": "field^4",
+      "domain": "periodic scalar lattices"
+    },
+    {
+      "name": "C1",
+      "definition": "Nearest-neighbor field correlation.",
+      "units": "field^2",
+      "domain": "periodic scalar lattices"
+    },
+    {
+      "name": "BlockVariance",
+      "definition": "Mean unresolved within-block variance.",
+      "units": "field^2",
+      "domain": "even periodic scalar lattices"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T23",
+      "condition": "Produce an even lattice configuration for which M2(phi)-M2_c(B phi) differs from V_B(phi).",
+      "target_claims": ["T23"]
+    },
+    {
+      "id": "F-T27",
+      "condition": "Produce a periodic configuration for which direct action density differs from the stated moment/correlation decomposition.",
+      "target_claims": ["T27"]
+    },
+    {
+      "id": "F-N10",
+      "condition": "Show that the explicit N=4 witness pair has either different blocked fields or equal microscopic actions at kappa=m2=lambda=1.",
+      "target_claims": ["N10"]
+    }
+  ],
+  "residual_axes": [
+    "within_block_variance",
+    "coarse_second_moment_loss",
+    "nearest_neighbor_correlation",
+    "action_reconstruction_loss",
+    "z2_symmetry"
+  ],
+  "metadata": {
+    "purpose": "Instantiate Tristan coarse-graining and residual accounting in a concrete finite scalar lattice model.",
+    "result": "LATTICE_PHI4_COARSE_GRAINING_BRIDGE",
+    "pc_evidence_file": "research/omega_r12_pc_evidence.json",
+    "finite_witness_alphabet": [-1, 0, 1],
+    "finite_witness_sites": 4,
+    "not_continuum_qft_validation": true,
+    "not_empirical_validation": true
+  }
+}
