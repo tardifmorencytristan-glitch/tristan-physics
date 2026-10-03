@@ -53,6 +53,8 @@ jobs:
           python -m json.tool research/omega_r11_pc_evidence.json >/dev/null
           python -m json.tool research/omega_lattice_phi4_model_r1.json >/dev/null
           python -m json.tool research/omega_r12_pc_evidence.json >/dev/null
+          python -m json.tool research/omega_effective_action_model_r1.json >/dev/null
+          python -m json.tool research/omega_r13_pc_evidence.json >/dev/null
 
       - name: Dependency DAG and anti-circularity gate
         run: |
@@ -61,7 +63,8 @@ jobs:
             research/omega_multioperation_model_r1.json \
             research/omega_observable_model_r1.json \
             research/omega_effective_error_model_r1.json \
-            research/omega_lattice_phi4_model_r1.json
+            research/omega_lattice_phi4_model_r1.json \
+            research/omega_effective_action_model_r1.json
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
@@ -92,3 +95,6 @@ jobs:
 
       - name: Lattice phi4 bridge verifier
         run: python tools/verify_lattice_phi4_bridge.py
+
+      - name: Effective-action discovery verifier
+        run: python tools/verify_effective_action_discovery.py
