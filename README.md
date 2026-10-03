@@ -11,6 +11,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Typed-History Results R1](docs/OMEGA_HISTORY_RESULTS_R1.md)
 - [Ω Compositional Process Results R1](docs/OMEGA_COMPOSITION_RESULTS_R1.md)
 - [Ω Free-Path Composition Results R1](docs/OMEGA_FREE_PATH_RESULTS_R1.md)
+- [Ω Quotient / Coarse-Graining Results R1](docs/OMEGA_QUOTIENT_RESULTS_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -24,6 +25,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega typed-history model R1](research/omega_history_model_r1.json)
 - [Omega compositional-process model R1](research/omega_composition_model_r1.json)
 - [Omega free-path model R1](research/omega_free_path_model_r1.json)
+- [Omega quotient congruence model R1](research/omega_quotient_model_r1.json)
 
 ## Verification tools
 
@@ -32,6 +34,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_history_relation_equivalence.py`
 - `tools/verify_composition_information.py`
 - `tools/verify_free_path_category.py`
+- `tools/verify_quotient_congruence.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -47,7 +50,10 @@ Proved toy-model results currently include:
 - arbitrary process composition is not reconstructible from relation projection alone,
 - finite directed paths generate a canonical associative composition,
 - zero-length paths generate identities,
-- arbitrary path quotients require composition-compatible congruence.
+- arbitrary path quotients require composition-compatible congruence,
+- composition congruence is necessary and sufficient for representative-independent quotient composition,
+- quotient projection preserves composition,
+- arbitrary non-congruence coarse-graining can destroy process structure.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
