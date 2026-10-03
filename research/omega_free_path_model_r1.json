@@ -1,0 +1,109 @@
+{
+  "id": "omega-free-path-composition-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "DirectedGraph",
+      "statement": "There is a directed graph G=(V,E).",
+      "operational_definition": "Vertices V and directed edges E with source/target.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "FinitePathRule",
+      "statement": "A path is a finite composable sequence of directed edges; zero-length paths are allowed.",
+      "operational_definition": "Finite typed edge lists.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "PathComposition",
+      "depends_on": ["DirectedGraph", "FinitePathRule"],
+      "statement": "Compose compatible paths by finite sequence concatenation."
+    },
+    {
+      "name": "EmptyPath",
+      "depends_on": ["FinitePathRule"],
+      "statement": "For each vertex v, epsilon_v is the zero-length path at v."
+    },
+    {
+      "name": "PathQuotient",
+      "depends_on": ["PathComposition"],
+      "statement": "A quotient identifies paths under an equivalence relation."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T7",
+      "kind": "THEOREM",
+      "statement": "Finite path concatenation is associative.",
+      "depends_on": ["PathComposition"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FREE_PATH_RESULTS_R1.md#t7--path-concatenation-is-associative"]
+    },
+    {
+      "id": "T8",
+      "kind": "THEOREM",
+      "statement": "Zero-length paths are left and right identities for path concatenation.",
+      "depends_on": ["PathComposition", "EmptyPath"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FREE_PATH_RESULTS_R1.md#t8--empty-paths-are-identities"]
+    },
+    {
+      "id": "T9",
+      "kind": "THEOREM",
+      "statement": "Every directed graph with the finite-path rule generates an associative compositional process system with identities.",
+      "depends_on": ["T7", "T8"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FREE_PATH_RESULTS_R1.md#t9--every-directed-graph-generates-a-compositional-process-system"]
+    },
+    {
+      "id": "N5",
+      "kind": "NO_GO",
+      "statement": "Arbitrary path equivalence does not guarantee well-defined quotient composition; a composition congruence is required.",
+      "depends_on": ["PathQuotient", "PathComposition"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_FREE_PATH_RESULTS_R1.md#n5--arbitrary-path-identification-can-destroy-well-defined-composition"]
+    },
+    {
+      "id": "C6",
+      "kind": "CONJECTURE",
+      "statement": "Physically useful coarse-graining may correspond to selected composition congruences on process spaces.",
+      "depends_on": ["N5"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "PathLength",
+      "definition": "Number of primitive edges in a finite path.",
+      "units": null,
+      "domain": "finite directed path models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T7",
+      "condition": "Produce finite compatible edge sequences for which list concatenation is not associative.",
+      "target_claims": ["T7"]
+    },
+    {
+      "id": "F-N5",
+      "condition": "Show quotient composition remains representative-independent under an equivalence relation that is not composition-compatible.",
+      "target_claims": ["N5"]
+    }
+  ],
+  "residual_axes": [
+    "composition",
+    "associativity",
+    "identity",
+    "quotient_well_definedness",
+    "coarse_graining"
+  ],
+  "metadata": {
+    "purpose": "Test derivation of composition structure from finite directed paths.",
+    "result": "FREE_COMPOSITION_DERIVED_FROM_PATH_SYNTAX",
+    "not_physical_validation": true
+  }
+}
