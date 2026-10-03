@@ -13,6 +13,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Free-Path Composition Results R1](docs/OMEGA_FREE_PATH_RESULTS_R1.md)
 - [Ω Quotient / Coarse-Graining Results R1](docs/OMEGA_QUOTIENT_RESULTS_R1.md)
 - [Ω Multi-Operation Congruence Results R1](docs/OMEGA_MULTIOPERATION_RESULTS_R1.md)
+- [Ω Observable Preservation Results R1](docs/OMEGA_OBSERVABLE_RESULTS_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -29,6 +30,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega quotient congruence model R1](research/omega_quotient_model_r1.json)
 - [Omega multi-operation model R1](research/omega_multioperation_model_r1.json)
 - [Omega R9 three-PC evidence](research/omega_r9_pc_evidence.json)
+- [Omega observable preservation model R1](research/omega_observable_model_r1.json)
+- [Omega R10 three-PC evidence](research/omega_r10_pc_evidence.json)
 
 ## Verification tools
 
@@ -39,6 +42,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_free_path_category.py`
 - `tools/verify_quotient_congruence.py`
 - `tools/verify_multioperation_congruence.py`
+- `tools/verify_observable_preservation.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -59,7 +63,10 @@ Proved toy-model results currently include:
 - quotient projection preserves composition,
 - arbitrary non-congruence coarse-graining can destroy process structure,
 - a preserved operation family descends iff the equivalence is a congruence for every operation in that signature,
-- preserving one operation does not imply preserving another.
+- preserving one operation does not imply preserving another,
+- exact observable descent requires class constancy,
+- bounded within-class oscillation yields explicit approximation error bounds,
+- operation preservation does not imply arbitrary observable preservation.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
