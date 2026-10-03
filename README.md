@@ -15,6 +15,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Multi-Operation Congruence Results R1](docs/OMEGA_MULTIOPERATION_RESULTS_R1.md)
 - [Ω Observable Preservation Results R1](docs/OMEGA_OBSERVABLE_RESULTS_R1.md)
 - [Ω Effective-Theory Error Budget Results R1](docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md)
+- [Ω Lattice Phi4 Bridge Results R1](docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -35,6 +36,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega R10 three-PC evidence](research/omega_r10_pc_evidence.json)
 - [Omega effective error-budget model R1](research/omega_effective_error_model_r1.json)
 - [Omega R11 three-PC evidence](research/omega_r11_pc_evidence.json)
+- [Omega lattice phi4 model R1](research/omega_lattice_phi4_model_r1.json)
+- [Omega R12 three-PC evidence](research/omega_r12_pc_evidence.json)
 
 ## Verification tools
 
@@ -47,6 +50,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_multioperation_congruence.py`
 - `tools/verify_observable_preservation.py`
 - `tools/verify_effective_error_budget.py`
+- `tools/verify_lattice_phi4_bridge.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -73,7 +77,12 @@ Proved toy-model results currently include:
 - operation preservation does not imply arbitrary observable preservation,
 - multi-stage observable residuals are bounded by the sum of declared stage residuals,
 - Lipschitz sensitivities propagate and can amplify upstream approximation error,
-- small local residuals alone do not guarantee small final residuals under repeated sensitive dynamics.
+- small local residuals alone do not guarantee small final residuals under repeated sensitive dynamics,
+- two-site block averaging has an exact second-moment loss equal to unresolved within-block variance,
+- the lattice phi4 action and the block map respect global Z2 symmetry,
+- odd observables cancel in the exact finite Z2-symmetric ensemble,
+- periodic phi4 action density decomposes exactly into M2, M4, and nearest-neighbor correlation,
+- the blocked field alone cannot reconstruct the microscopic action in general.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
