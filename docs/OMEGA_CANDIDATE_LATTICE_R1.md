@@ -6,15 +6,16 @@ This file tracks candidate primitives without assuming that "more abstract" mean
 
 ## Current lattice
 
-[
 UnaryAdmissibility
-prec
-TypedHistory
-sim_{	ext{edge-existence}}
+< TypedHistory
+~ DirectedRelation at edge-existence level
+< ArbitraryCompositionalProcess in information content.
+
+A separate constructive branch is now established:
+
 DirectedRelation
-prec_{	ext{information}}
-CompositionalProcess
-]
+-> FinitePathRule
+-> FreeCompositionalProcess.
 
 ### UnaryAdmissibility
 
@@ -33,7 +34,7 @@ Strength:
 - represents orientation.
 
 Failure:
-- source/target maps already carry direction.
+- primitive source/target maps already carry direction.
 
 Status:
 - **FORMALIZED / REPRESENTATION EQUIVALENT to directed relations at edge-existence level**.
@@ -44,31 +45,39 @@ Strength:
 - explicit orientation.
 
 Failure:
-- loses process identity and composition information.
+- loses process identity and arbitrary composition information.
 
 Status:
 - **FORMALIZED**.
 
-### CompositionalProcess
+### ArbitraryCompositionalProcess
 
 Strength:
-- preserves process identity and composition outcomes not recoverable from induced edge existence alone.
+- preserves process identity and arbitrary composition outcomes.
 
-Established result:
-- two process systems can have the same states, processes, endpoints, and induced relation while having different composition laws.
-
-Risk:
-- may still assume composition rather than derive it from weaker structure.
+Established:
+- strictly richer than relation projection for composition information.
 
 Status:
-- **FORMALIZED / STRICTLY RICHER THAN RELATION PROJECTION FOR COMPOSITION INFORMATION**.
+- **FORMALIZED**.
 
-### Next candidate
+### FreeCompositionalProcess
 
-**SequentialRewriteProcess**
+Strength:
+- generated canonically from a directed graph by finite paths,
+- associativity derived from sequence concatenation,
+- identities derived from zero-length paths.
 
-Question:
-- can part of composition be derived from weaker sequential/rewrite constraints rather than assumed as a primitive law?
+Limitation:
+- this generates one canonical composition; it does not recover every arbitrary composition law.
+
+Status:
+- **FORMALIZED / DERIVED FROM DirectedRelation + FinitePathRule**.
+
+### QuotientProcess
+
+New gate:
+- path identification is valid only when the equivalence is a composition congruence.
 
 Status:
 - **NEXT TARGET**.
