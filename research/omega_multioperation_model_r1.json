@@ -1,0 +1,110 @@
+{
+  "id": "omega-multioperation-congruence-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "OperationFamily",
+      "statement": "There is a family of operations on a carrier.",
+      "operational_definition": "A finite or indexed signature of k-ary operations.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "EquivalenceRelation",
+      "statement": "There is an equivalence relation on the carrier.",
+      "operational_definition": "A reflexive, symmetric, transitive relation.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "FamilywiseCongruence",
+      "depends_on": ["OperationFamily", "EquivalenceRelation"],
+      "statement": "The equivalence is a congruence for every operation in the preserved signature."
+    },
+    {
+      "name": "QuotientSignature",
+      "depends_on": ["FamilywiseCongruence"],
+      "statement": "Each operation descends to equivalence classes."
+    },
+    {
+      "name": "SignatureProjection",
+      "depends_on": ["QuotientSignature"],
+      "statement": "Maps each carrier element to its equivalence class while preserving all descended operations."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T13",
+      "kind": "THEOREM",
+      "statement": "Familywise congruence is sufficient for all preserved operations to descend to the quotient.",
+      "depends_on": ["FamilywiseCongruence", "QuotientSignature"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_MULTIOPERATION_RESULTS_R1.md#t13--familywise-congruence-is-sufficient"]
+    },
+    {
+      "id": "T14",
+      "kind": "THEOREM",
+      "statement": "If all preserved operations are representative-independent on quotient classes, the equivalence is a congruence for every operation.",
+      "depends_on": ["QuotientSignature"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_MULTIOPERATION_RESULTS_R1.md#t14--familywise-congruence-is-necessary"]
+    },
+    {
+      "id": "T15",
+      "kind": "THEOREM",
+      "statement": "The quotient projection preserves the entire descended operation signature.",
+      "depends_on": ["FamilywiseCongruence", "SignatureProjection"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_MULTIOPERATION_RESULTS_R1.md#t15--quotient-projection-preserves-the-whole-signature"]
+    },
+    {
+      "id": "N7",
+      "kind": "NO_GO",
+      "statement": "Preservation of one operation does not imply preservation of another operation.",
+      "depends_on": ["T13", "T14"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_MULTIOPERATION_RESULTS_R1.md#n7--preserving-one-operation-does-not-imply-preserving-another"]
+    },
+    {
+      "id": "C8",
+      "kind": "CONJECTURE",
+      "statement": "Effective physical descriptions may be characterized by approximate congruence over a selected signature of operations and observables.",
+      "depends_on": ["T15", "N7"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "CongruencePartition",
+      "definition": "A carrier partition preserving all operations in the selected signature.",
+      "units": null,
+      "domain": "finite multi-operation toy models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T13",
+      "condition": "Give a familywise congruence whose descended operation family depends on representative choice.",
+      "target_claims": ["T13"]
+    },
+    {
+      "id": "F-T14",
+      "condition": "Give well-defined quotient operations for a signature where the equivalence fails compatibility with at least one operation.",
+      "target_claims": ["T14"]
+    }
+  ],
+  "residual_axes": [
+    "operation_family",
+    "signature_preservation",
+    "quotient_validity",
+    "coarse_graining",
+    "information_loss"
+  ],
+  "metadata": {
+    "purpose": "Generalize quotient congruence from one operation to a preserved operation family.",
+    "result": "MULTIOPERATION_QUOTIENT_IFF_FAMILYWISE_CONGRUENCE",
+    "pc_evidence_file": "research/omega_r9_pc_evidence.json",
+    "not_physical_validation": true
+  }
+}
