@@ -1,0 +1,42 @@
+{
+  "status": "READ_BACK_VERIFIED_3PC",
+  "date": "2026-10-03",
+  "mission": "omega_r13_effective_action_discovery",
+  "branch": "omega-r13-effective-action-discovery",
+  "verification_head": "27d1131a7d7be4a25a1a5dd2b6f51e34e70377cd",
+  "common_result": {
+    "fine_configuration_count": 81,
+    "blocked_support_count": 25,
+    "fine_partition_function": 3.8877080521546223,
+    "coarse_partition_function": 3.887708052154619,
+    "partition_difference": 3.552713678800501e-15,
+    "max_z2_weight_error": 0.0,
+    "max_exact_reconstruction_error": 5.551115123125783e-17,
+    "base_rss": 0.01840940267844249,
+    "base_rms": 0.02713625079368371,
+    "base_max_abs": 0.040477037232412805,
+    "base_kl": 0.00029889082275880353,
+    "best_action_candidate": "m2_sq",
+    "best_action_gain": 0.0017136788701311856,
+    "best_kl_candidate": "delta4",
+    "best_kl_gain": 2.2814959987032916e-06
+  },
+  "devices": [
+    {
+      "device": "DESKTOP-SHA9IHL",
+      "role": "GENERATOR_FORGE",
+      "tests": {"passed": 42, "failed": 0, "exit_code": 0}
+    },
+    {
+      "device": "DESKTOP-2G1SSMT",
+      "role": "OAK_INTEGRATOR",
+      "tests": {"passed": 42, "failed": 0, "exit_code": 0}
+    },
+    {
+      "device": "LAPTOP-AIU36QN6",
+      "role": "INDEPENDENT_VERIFIER",
+      "tests": {"passed": 42, "failed": 0, "exit_code": 0}
+    }
+  ],
+  "boundary": "Finite lattice formal/software verification only; not continuum RG, continuum QFT, or empirical particle-physics validation."
+}
