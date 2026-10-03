@@ -7,7 +7,9 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω-APT / Ω-GRG R1 — Axiomatic & Regeneralization Physics](docs/OMEGA_APT_GRG_R1.md)
 - [Ω-APT / Ω-GRG R2 MAX — proof/falsification architecture](docs/OMEGA_APT_GRG_R2_MAX.md)
 - [Ω Formal Results R1 — first proved toy-model results](docs/OMEGA_FORMAL_RESULTS_R1.md)
-- [Ω Constraint Compression Results R1 — obstruction to naive unary constraint reduction](docs/OMEGA_CONSTRAINT_RESULTS_R1.md)
+- [Ω Constraint Compression Results R1](docs/OMEGA_CONSTRAINT_RESULTS_R1.md)
+- [Ω Typed-History Results R1](docs/OMEGA_HISTORY_RESULTS_R1.md)
+- [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
 
@@ -15,35 +17,34 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 
 - [Omega theory JSON Schema R1](schemas/omega_theory_r1.schema.json)
 - [Omega toy model R1](research/omega_toy_model_r1.json)
-- [Omega toy model R2 — formalized claims](research/omega_toy_model_r2.json)
+- [Omega toy model R2](research/omega_toy_model_r2.json)
 - [Omega constraint-compression model R1](research/omega_constraint_model_r1.json)
+- [Omega typed-history model R1](research/omega_history_model_r1.json)
 
 ## Verification tools
 
-- `tools/verify_reachability_order.py` — exhaustive finite-model checker
-- `tools/verify_dependency_dag.py` — dependency integrity and anti-circularity checker
-- `tests/test_reachability_order.py` — reachability/order regression tests
-- `tests/test_dependency_dag.py` — dependency-DAG regression tests
-- `.github/workflows/omega-formal-gates.yml` — automated formal gates
+- `tools/verify_reachability_order.py`
+- `tools/verify_dependency_dag.py`
+- `tools/verify_history_relation_equivalence.py`
+- `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
 
-Proved results currently concern mathematical toy structures, including:
+Proved toy-model results currently include:
 
-- strict order induced by mutual-reachability quotient,
-- finite order-preserving rankings,
-- absence of strict cycles in that quotient,
-- an independence witness for Distinction relative to T1,
-- an obstruction showing unary state admissibility alone cannot canonically generate asymmetric directed reachability on symmetric admissible states.
+- strict partial order from the mutual-reachability quotient,
+- finite order-preserving integer rankings,
+- no strict cycles in that quotient,
+- Distinction is unnecessary for T1,
+- unary admissibility alone cannot canonically orient symmetric admissible states,
+- every typed-history system induces a directed relation,
+- every directed relation has a canonical typed-history encoding,
+- primitive source/target maps therefore do not by themselves establish genuine primitive compression.
 
-These are **not** empirical validation of a fundamental physical theory.
+These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
 ## Status discipline
 
-Generated research concepts are not treated as verified physics until they pass explicit proof, empirical, and read-back gates.
-
-Core rule:
-
 [
-\text{Generated} \neq \text{Proved} \neq \text{Measured} \neq \text{Replicated}
+\text{Generated} \neq \text{Formalized} \neq \text{Proved} \neq \text{Measured} \neq \text{Replicated}
 ]
