@@ -1,0 +1,72 @@
+{
+  "status": "READ_BACK_VERIFIED_3PC",
+  "date": "2026-10-03",
+  "mission": "omega_r12_lattice_phi4_bridge",
+  "branch": "omega-r12-lattice-phi4-bridge",
+  "verification_head": "43a52996eaa1a4c1857a939f9d89865b6bcbc34c",
+  "devices": [
+    {
+      "device": "DESKTOP-SHA9IHL",
+      "role": "GENERATOR_FORGE",
+      "tests": {"passed": 37, "failed": 0, "exit_code": 0},
+      "result": {
+        "configuration_count": 81,
+        "partition_function": 3.8877080521546192,
+        "fine_m2_expectation": 0.32192233117469693,
+        "coarse_m2_expectation": 0.21160139705467243,
+        "block_variance_expectation": 0.1103209341200245,
+        "nearest_neighbor_correlation_expectation": 0.10128046293464793,
+        "max_t23_error": 0.0,
+        "max_action_z2_error": 0.0,
+        "max_block_z2_error": 0.0,
+        "ensemble_t26_error": 0.0,
+        "max_t27_error": 0.0,
+        "n10_action_gap": 4.5
+      }
+    },
+    {
+      "device": "DESKTOP-2G1SSMT",
+      "role": "OAK_INTEGRATOR",
+      "tests": {"passed": 37, "failed": 0, "exit_code": 0},
+      "result": {
+        "configuration_count": 81,
+        "partition_function": 3.8877080521546192,
+        "fine_m2_expectation": 0.32192233117469693,
+        "coarse_m2_expectation": 0.21160139705467243,
+        "block_variance_expectation": 0.1103209341200245,
+        "nearest_neighbor_correlation_expectation": 0.10128046293464793,
+        "max_t23_error": 0.0,
+        "max_action_z2_error": 0.0,
+        "max_block_z2_error": 0.0,
+        "ensemble_t26_error": 0.0,
+        "max_t27_error": 0.0,
+        "n10_action_gap": 4.5
+      }
+    },
+    {
+      "device": "LAPTOP-AIU36QN6",
+      "role": "INDEPENDENT_VERIFIER",
+      "tests": {"passed": 37, "failed": 0, "exit_code": 0},
+      "result": {
+        "configuration_count": 81,
+        "partition_function": 3.8877080521546192,
+        "fine_m2_expectation": 0.32192233117469693,
+        "coarse_m2_expectation": 0.21160139705467243,
+        "block_variance_expectation": 0.1103209341200245,
+        "nearest_neighbor_correlation_expectation": 0.10128046293464793,
+        "max_t23_error": 0.0,
+        "max_action_z2_error": 0.0,
+        "max_block_z2_error": 0.0,
+        "ensemble_t26_error": 0.0,
+        "max_t27_error": 0.0,
+        "n10_action_gap": 4.5
+      }
+    }
+  ],
+  "auxiliary_node": {
+    "device": "localhost",
+    "status": "HOLD",
+    "reason": "Python executable was present but permission was denied; this node was not counted as verification evidence."
+  },
+  "boundary": "Finite lattice formal/software verification only; not continuum QFT or empirical particle-physics validation."
+}
