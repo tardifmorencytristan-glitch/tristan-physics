@@ -16,28 +16,32 @@ DirectedRelation
 -> FreeCompositionalProcess
 -> CompositionCongruence
 -> QuotientProcess
--> MultiOperationCongruence.
+-> MultiOperationCongruence
+-> ObservablePreservation
+-> ApproximateObservableDescent.
 
-### MultiOperationCongruence
+### ObservablePreservation
 
 Established:
-- an equivalence relation yields well-defined quotient operations for a preserved signature iff it is a congruence for every operation in that signature;
-- the quotient projection preserves the entire descended signature;
-- preservation of one operation does not imply preservation of another.
+- exact observable descent iff the observable is constant on each equivalence class;
+- bounded within-class oscillation gives explicit effective-observable error bounds;
+- for real-valued observables with class extrema, midpoint representatives achieve at most half the class oscillation;
+- preserving algebraic operations does not imply preserving arbitrary observables.
 
 Three-PC witness:
-- exhaustive enumeration on Z4 for addition and multiplication modulo 4 found exactly three congruence partitions;
-- independent verifier matched the exhaustive generator.
+- parity on the Z4 parity quotient descends exactly;
+- normalized value x/3 has oscillation 2/3;
+- midpoint coarse-graining attains max error 1/3.
 
 Status:
 - **FORMALIZED / PROVED STRUCTURAL GATE**.
 
-### ObservablePreservingQuotient
+### ApproximateOperationCongruence
 
 Next question:
-- which observables descend to the quotient,
-- which observables are lost,
-- how to quantify exact versus approximate preservation.
+- how should approximate compatibility of operations be defined,
+- how do operation errors propagate under repeated composition,
+- how should residuals accumulate across multistage coarse-graining.
 
 Status:
 - **NEXT TARGET**.
