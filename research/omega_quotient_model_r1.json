@@ -1,0 +1,108 @@
+{
+  "id": "omega-quotient-congruence-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "CompositionalProcess",
+      "statement": "There is a process set with partial composition.",
+      "operational_definition": "A carrier set P with a partially defined binary operation.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "ProcessEquivalence",
+      "statement": "There is an equivalence relation on processes.",
+      "operational_definition": "A reflexive, symmetric, transitive relation on P.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "CompositionCongruence",
+      "depends_on": ["CompositionalProcess", "ProcessEquivalence"],
+      "statement": "Equivalent representatives compose to equivalent results whenever the compared compositions are defined."
+    },
+    {
+      "name": "QuotientComposition",
+      "depends_on": ["CompositionCongruence"],
+      "statement": "Define [q] o [p] = [q o p]."
+    },
+    {
+      "name": "QuotientProjection",
+      "depends_on": ["QuotientComposition"],
+      "statement": "Map each process to its equivalence class."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T10",
+      "kind": "THEOREM",
+      "statement": "Composition congruence is sufficient for representative-independent quotient composition.",
+      "depends_on": ["CompositionCongruence", "QuotientComposition"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_QUOTIENT_RESULTS_R1.md#t10--composition-congruence-is-sufficient"]
+    },
+    {
+      "id": "T11",
+      "kind": "THEOREM",
+      "statement": "Representative-independent quotient composition implies composition compatibility.",
+      "depends_on": ["QuotientComposition"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_QUOTIENT_RESULTS_R1.md#t11--representative-independent-quotient-composition-implies-compatibility"]
+    },
+    {
+      "id": "T12",
+      "kind": "THEOREM",
+      "statement": "For a composition congruence, the quotient projection preserves composition.",
+      "depends_on": ["CompositionCongruence", "QuotientProjection"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_QUOTIENT_RESULTS_R1.md#t12--quotient-projection-is-a-homomorphism"]
+    },
+    {
+      "id": "N6",
+      "kind": "NO_GO",
+      "statement": "Arbitrary non-congruence coarse-graining can destroy well-defined process composition.",
+      "depends_on": ["T10", "T11"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_QUOTIENT_RESULTS_R1.md#n6--arbitrary-coarse-graining-can-destroy-process-structure"]
+    },
+    {
+      "id": "C7",
+      "kind": "CONJECTURE",
+      "statement": "Useful effective physical descriptions can be modeled as quotients preserving a selected family of operations and observables.",
+      "depends_on": ["T12", "N6"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "QuotientClass",
+      "definition": "Equivalence class of a process under the selected coarse-graining relation.",
+      "units": null,
+      "domain": "finite process quotient toy models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T10",
+      "condition": "Give a composition congruence for which quotient composition depends on representatives.",
+      "target_claims": ["T10"]
+    },
+    {
+      "id": "F-T11",
+      "condition": "Give a representative-independent quotient composition where the underlying equivalence is not compatible with composition.",
+      "target_claims": ["T11"]
+    }
+  ],
+  "residual_axes": [
+    "quotient_well_definedness",
+    "operation_preservation",
+    "information_loss",
+    "coarse_graining"
+  ],
+  "metadata": {
+    "purpose": "Formalize structure-preserving coarse-graining as quotient by composition congruence.",
+    "result": "QUOTIENT_COMPOSITION_IFF_CONGRUENCE",
+    "not_physical_validation": true
+  }
+}

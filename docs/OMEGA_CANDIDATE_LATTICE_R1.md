@@ -2,89 +2,60 @@
 
 Status: **RESEARCH MAP**
 
-This file tracks candidate primitives without assuming that "more abstract" means "better".
-
-## Current lattice
+## Current structure
 
 UnaryAdmissibility
 < TypedHistory
 ~ DirectedRelation at edge-existence level
 < ArbitraryCompositionalProcess in information content.
 
-A separate constructive branch is now established:
+Constructive branch:
 
 DirectedRelation
 -> FinitePathRule
--> FreeCompositionalProcess.
+-> FreeCompositionalProcess
+-> CompositionCongruence
+-> QuotientProcess.
 
 ### UnaryAdmissibility
-
-Strength:
-- minimal.
-
-Failure:
-- cannot canonically orient symmetric admissible states.
-
-Status:
-- **BLOCKED for directed-dynamics compression**.
+Status: **BLOCKED** for directed-dynamics compression.
 
 ### TypedHistory
-
-Strength:
-- represents orientation.
-
-Failure:
-- primitive source/target maps already carry direction.
-
-Status:
-- **FORMALIZED / REPRESENTATION EQUIVALENT to directed relations at edge-existence level**.
+Status: **FORMALIZED / REPRESENTATION EQUIVALENT to directed relations at edge-existence level**.
 
 ### DirectedRelation
-
-Strength:
-- explicit orientation.
-
-Failure:
-- loses process identity and arbitrary composition information.
-
-Status:
-- **FORMALIZED**.
+Status: **FORMALIZED**.
 
 ### ArbitraryCompositionalProcess
-
-Strength:
-- preserves process identity and arbitrary composition outcomes.
-
-Established:
-- strictly richer than relation projection for composition information.
-
-Status:
-- **FORMALIZED**.
+Status: **FORMALIZED / richer than relation projection for composition information**.
 
 ### FreeCompositionalProcess
+Status: **FORMALIZED / canonical composition derived from DirectedRelation + FinitePathRule**.
 
-Strength:
-- generated canonically from a directed graph by finite paths,
-- associativity derived from sequence concatenation,
-- identities derived from zero-length paths.
+### CompositionCongruence
+Established:
+- sufficient for representative-independent quotient composition,
+- necessary for representative-independent quotient composition,
+- quotient projection preserves composition.
 
-Limitation:
-- this generates one canonical composition; it does not recover every arbitrary composition law.
-
-Status:
-- **FORMALIZED / DERIVED FROM DirectedRelation + FinitePathRule**.
+Status: **PROVED STRUCTURAL GATE**.
 
 ### QuotientProcess
+Interpretation:
+- candidate model of structure-preserving coarse-graining,
+- only valid for operations preserved by the chosen congruence.
 
-New gate:
-- path identification is valid only when the equivalence is a composition congruence.
+Status: **FORMALIZED**.
 
-Status:
-- **NEXT TARGET**.
+### MultiOperationQuotient
+Next question:
+- what if the effective theory must preserve several operations or observables simultaneously?
+
+Status: **NEXT TARGET**.
 
 ## Court rule
 
-A candidate primitive advances only if it demonstrates at least one of:
+A candidate advances only if it demonstrates at least one of:
 
 1. fewer independent assumptions,
 2. stronger derivations,
