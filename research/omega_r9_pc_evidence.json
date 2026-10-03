@@ -1,0 +1,48 @@
+{
+  "status": "READ_BACK_VERIFIED",
+  "date": "2026-10-03",
+  "mission": "omega_r9_multioperation_congruence",
+  "devices": [
+    {
+      "device": "DESKTOP-SHA9IHL",
+      "role": "GENERATOR_FORGE",
+      "artifact": "C:\\Users\\Admin\\.tristan\\missions\\omega_r9\\forge_result.json",
+      "sha256": "a2ca789b68bd7cae839efb0ad31df05db34fb91b9737560abbc7faf7bf72a385",
+      "result": {
+        "partition_count": 15,
+        "multioperation_congruences": [
+          [[0],[1],[2],[3]],
+          [[0,2],[1,3]],
+          [[0,1,2,3]]
+        ]
+      }
+    },
+    {
+      "device": "DESKTOP-2G1SSMT",
+      "role": "OAK_INTEGRATOR",
+      "artifact": "C:\\Users\\trist\\.tristan\\missions\\omega_r9\\oak_result.json",
+      "sha256": "5dce187bc1897dff2f043e85ecef94a21f8b7db683a96f88e82f38772ba9aeae",
+      "result": {
+        "tested_valid_partition": [[0,2],[1,3]],
+        "tested_invalid_partition": [[0,1],[2,3]],
+        "invalid_preserves_add_mod4": false,
+        "invalid_preserves_mul_mod4": false
+      }
+    },
+    {
+      "device": "LAPTOP-AIU36QN6",
+      "role": "INDEPENDENT_VERIFIER",
+      "artifact": "C:\\Users\\Sonia\\.tristan\\missions\\omega_r9\\verify_result.json",
+      "sha256": "5cdd9e7a02dac19f11e6995ee54c21b3a7cc70dd7754695761feb1979d7198ce",
+      "result": {
+        "partition_count": 15,
+        "matches_expected": true,
+        "verified_congruences": [
+          [[0,1,2,3]],
+          [[0,2],[1,3]],
+          [[0],[1],[2],[3]]
+        ]
+      }
+    }
+  ]
+}
