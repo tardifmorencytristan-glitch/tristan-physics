@@ -16,6 +16,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Observable Preservation Results R1](docs/OMEGA_OBSERVABLE_RESULTS_R1.md)
 - [Ω Effective-Theory Error Budget Results R1](docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md)
 - [Ω Lattice Phi4 Bridge Results R1](docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md)
+- [Ω Effective-Action Discovery Results R1](docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -38,6 +39,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega R11 three-PC evidence](research/omega_r11_pc_evidence.json)
 - [Omega lattice phi4 model R1](research/omega_lattice_phi4_model_r1.json)
 - [Omega R12 three-PC evidence](research/omega_r12_pc_evidence.json)
+- [Omega effective-action discovery model R1](research/omega_effective_action_model_r1.json)
+- [Omega R13 three-PC evidence](research/omega_r13_pc_evidence.json)
 
 ## Verification tools
 
@@ -51,6 +54,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_observable_preservation.py`
 - `tools/verify_effective_error_budget.py`
 - `tools/verify_lattice_phi4_bridge.py`
+- `tools/verify_effective_action_discovery.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -82,7 +86,12 @@ Proved toy-model results currently include:
 - the lattice phi4 action and the block map respect global Z2 symmetry,
 - odd observables cancel in the exact finite Z2-symmetric ensemble,
 - periodic phi4 action density decomposes exactly into M2, M4, and nearest-neighbor correlation,
-- the blocked field alone cannot reconstruct the microscopic action in general.
+- the blocked field alone cannot reconstruct the microscopic action in general,
+- the exact blocked Boltzmann measure preserves total weight and Z2 symmetry,
+- an exact finite effective action S_eff=-log W reproduces the blocked measure on its support,
+- nested effective-operator spaces cannot worsen the optimal action-space least-squares residual,
+- the simple constant+M2+C1+M4 coarse ansatz is not exact on the R13 finite support,
+- operator rankings can differ between action-space residual and probability-space KL objectives.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
