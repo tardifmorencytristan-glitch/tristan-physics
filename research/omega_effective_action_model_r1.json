@@ -1,0 +1,146 @@
+{
+  "id": "omega-effective-action-discovery-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "FineBoltzmannMeasure",
+      "statement": "The R12 finite microscopic ensemble has weight exp(-S(phi)) on {-1,0,1}^4.",
+      "operational_definition": "Enumerate all 81 fine configurations with the R12 action at kappa=m2=lambda=1.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "BlockPushForward",
+      "statement": "For y=B(phi), W(y)=sum_{phi:B(phi)=y} exp(-S(phi)).",
+      "operational_definition": "Group fine Boltzmann weights by their two-site block-average image.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "ExactEffectiveAction",
+      "statement": "On blocked support, S_eff(y)=-log W(y).",
+      "operational_definition": "Negative logarithm of the unnormalized pushed weight.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "OperatorProjectionCourt",
+      "statement": "Candidate effective actions are least-squares projections of S_eff onto symmetry-compatible operator spans and are also compared by normalized-distribution KL divergence.",
+      "operational_definition": "Uniform-support action RSS plus KL(P_exact||P_candidate).",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "BasePhi4CoarseAnsatz",
+      "depends_on": ["ExactEffectiveAction", "OperatorProjectionCourt"],
+      "statement": "S_base=c0+c2*M2+cC*C1+c4*M4."
+    },
+    {
+      "name": "CandidateGain",
+      "depends_on": ["BasePhi4CoarseAnsatz"],
+      "statement": "Action gain is base_RSS-candidate_RSS; distribution gain is base_KL-candidate_KL."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T28",
+      "kind": "THEOREM",
+      "statement": "The exact push-forward preserves total Boltzmann weight and inherits global Z2 symmetry.",
+      "depends_on": ["FineBoltzmannMeasure", "BlockPushForward"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md"]
+    },
+    {
+      "id": "T29",
+      "kind": "THEOREM",
+      "statement": "S_eff(y)=-log W(y) exactly reproduces the pushed blocked measure on its support.",
+      "depends_on": ["BlockPushForward", "ExactEffectiveAction"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md"]
+    },
+    {
+      "id": "T30",
+      "kind": "THEOREM",
+      "statement": "Expanding a least-squares operator span cannot increase the optimal action-space RSS.",
+      "depends_on": ["OperatorProjectionCourt"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md"]
+    },
+    {
+      "id": "N11",
+      "kind": "FINITE_NO_GO",
+      "statement": "The optimized constant+M2+C1+M4 ansatz does not exactly reproduce the R13 25-state effective action within the declared numerical tolerance.",
+      "depends_on": ["BasePhi4CoarseAnsatz"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md"]
+    },
+    {
+      "id": "T31",
+      "kind": "FINITE_RESULT",
+      "statement": "Among the tested one-operator extensions, M2^2 maximizes action-RSS gain while Delta4=(a-b)^4 maximizes KL gain, so the ranking depends on the objective.",
+      "depends_on": ["CandidateGain", "N11"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md"]
+    },
+    {
+      "id": "C12",
+      "kind": "CONJECTURE",
+      "statement": "Repeated coarse-graining can be organized as a Pareto operator-discovery flow carrying R11 residual budgets and symmetry constraints at every stage.",
+      "depends_on": ["T28", "T29", "T30", "T31"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "ActionRSS",
+      "definition": "Uniform-support squared residual between exact and projected effective action.",
+      "units": "action^2",
+      "domain": "finite blocked support"
+    },
+    {
+      "name": "DistributionKL",
+      "definition": "KL divergence from exact blocked probability to the normalized candidate Boltzmann distribution.",
+      "units": "dimensionless",
+      "domain": "finite blocked support"
+    }
+  ],
+  "candidate_operators": [
+    "M2_sq",
+    "Delta4",
+    "M2_times_C1",
+    "C1_cubic",
+    "M4_times_C1"
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T28",
+      "condition": "Find a pushed state pair y,-y with unequal exact weights or show total pushed weight differs from the microscopic partition function.",
+      "target_claims": ["T28"]
+    },
+    {
+      "id": "F-T29",
+      "condition": "Show exp(-S_eff(y)) differs from W(y) on any blocked support state.",
+      "target_claims": ["T29"]
+    },
+    {
+      "id": "F-N11",
+      "condition": "Produce base-ansatz coefficients yielding residual <= 1e-12 on every one of the 25 support states.",
+      "target_claims": ["N11"]
+    }
+  ],
+  "residual_axes": [
+    "effective_action_residual",
+    "distribution_kl",
+    "operator_complexity",
+    "z2_symmetry",
+    "objective_dependence"
+  ],
+  "metadata": {
+    "purpose": "Construct the exact finite blocked measure and test symmetry-compatible effective-action operator projections.",
+    "result": "EXACT_PUSH_FORWARD_PLUS_PARETO_OPERATOR_COURT",
+    "pc_evidence_file": "research/omega_r13_pc_evidence.json",
+    "fine_configuration_count": 81,
+    "blocked_support_count": 25,
+    "not_continuum_rg_validation": true,
+    "not_empirical_validation": true
+  }
+}
