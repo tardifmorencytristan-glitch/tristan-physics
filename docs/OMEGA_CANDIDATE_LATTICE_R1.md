@@ -15,43 +15,32 @@ DirectedRelation
 -> FinitePathRule
 -> FreeCompositionalProcess
 -> CompositionCongruence
--> QuotientProcess.
+-> QuotientProcess
+-> MultiOperationCongruence.
 
-### UnaryAdmissibility
-Status: **BLOCKED** for directed-dynamics compression.
+### MultiOperationCongruence
 
-### TypedHistory
-Status: **FORMALIZED / REPRESENTATION EQUIVALENT to directed relations at edge-existence level**.
-
-### DirectedRelation
-Status: **FORMALIZED**.
-
-### ArbitraryCompositionalProcess
-Status: **FORMALIZED / richer than relation projection for composition information**.
-
-### FreeCompositionalProcess
-Status: **FORMALIZED / canonical composition derived from DirectedRelation + FinitePathRule**.
-
-### CompositionCongruence
 Established:
-- sufficient for representative-independent quotient composition,
-- necessary for representative-independent quotient composition,
-- quotient projection preserves composition.
+- an equivalence relation yields well-defined quotient operations for a preserved signature iff it is a congruence for every operation in that signature;
+- the quotient projection preserves the entire descended signature;
+- preservation of one operation does not imply preservation of another.
 
-Status: **PROVED STRUCTURAL GATE**.
+Three-PC witness:
+- exhaustive enumeration on Z4 for addition and multiplication modulo 4 found exactly three congruence partitions;
+- independent verifier matched the exhaustive generator.
 
-### QuotientProcess
-Interpretation:
-- candidate model of structure-preserving coarse-graining,
-- only valid for operations preserved by the chosen congruence.
+Status:
+- **FORMALIZED / PROVED STRUCTURAL GATE**.
 
-Status: **FORMALIZED**.
+### ObservablePreservingQuotient
 
-### MultiOperationQuotient
 Next question:
-- what if the effective theory must preserve several operations or observables simultaneously?
+- which observables descend to the quotient,
+- which observables are lost,
+- how to quantify exact versus approximate preservation.
 
-Status: **NEXT TARGET**.
+Status:
+- **NEXT TARGET**.
 
 ## Court rule
 
