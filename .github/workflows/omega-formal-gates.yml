@@ -45,11 +45,14 @@ jobs:
           python -m json.tool research/omega_composition_model_r1.json >/dev/null
           python -m json.tool research/omega_free_path_model_r1.json >/dev/null
           python -m json.tool research/omega_quotient_model_r1.json >/dev/null
+          python -m json.tool research/omega_multioperation_model_r1.json >/dev/null
+          python -m json.tool research/omega_r9_pc_evidence.json >/dev/null
 
       - name: Dependency DAG and anti-circularity gate
         run: |
           python tools/verify_dependency_dag.py             research/omega_toy_model_r1.json             research/omega_toy_model_r2.json             research/omega_constraint_model_r1.json             research/omega_history_model_r1.json             research/omega_composition_model_r1.json             research/omega_free_path_model_r1.json \
-            research/omega_quotient_model_r1.json
+            research/omega_quotient_model_r1.json \
+            research/omega_multioperation_model_r1.json
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
@@ -68,3 +71,6 @@ jobs:
 
       - name: Quotient congruence verifier
         run: python tools/verify_quotient_congruence.py
+
+      - name: Multi-operation congruence verifier
+        run: python tools/verify_multioperation_congruence.py
