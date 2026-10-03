@@ -41,13 +41,17 @@ jobs:
           python -m json.tool research/omega_toy_model_r1.json >/dev/null
           python -m json.tool research/omega_toy_model_r2.json >/dev/null
           python -m json.tool research/omega_constraint_model_r1.json >/dev/null
+          python -m json.tool research/omega_history_model_r1.json >/dev/null
 
       - name: Dependency DAG and anti-circularity gate
         run: |
-          python tools/verify_dependency_dag.py             research/omega_toy_model_r1.json             research/omega_toy_model_r2.json             research/omega_constraint_model_r1.json
+          python tools/verify_dependency_dag.py             research/omega_toy_model_r1.json             research/omega_toy_model_r2.json             research/omega_constraint_model_r1.json             research/omega_history_model_r1.json
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
 
-      - name: Exhaustive finite verifier
+      - name: Exhaustive reachability verifier
         run: python tools/verify_reachability_order.py --max-n 4
+
+      - name: Exhaustive history-relation equivalence verifier
+        run: python tools/verify_history_relation_equivalence.py --max-n 3
