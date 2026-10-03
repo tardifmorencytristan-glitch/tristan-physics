@@ -54,11 +54,16 @@ def verify(vertices, edges, max_len=4):
         if left_identity != p or right_identity != p:
             return False, {"failure": "identity", "path": p, "s": s, "t": t}
 
-    for p, ps, pt in paths:
-        for q, qs, qt in paths:
+    # Non-empty associativity is checked directly. Cases involving empty
+    # paths are already covered by the identity checks above; avoiding them
+    # here prevents loss of endpoint metadata for the empty tuple encoding.
+    nonempty_paths = [item for item in paths if item[0]]
+
+    for p, ps, pt in nonempty_paths:
+        for q, qs, qt in nonempty_paths:
             if pt != qs:
                 continue
-            for r, rs, rt in paths:
+            for r, rs, rt in nonempty_paths:
                 if qt != rs:
                     continue
                 if len(p) + len(q) + len(r) > max_len:
