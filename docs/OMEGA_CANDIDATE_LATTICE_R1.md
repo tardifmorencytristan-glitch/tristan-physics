@@ -12,7 +12,7 @@ prec
 TypedHistory
 sim_{	ext{edge-existence}}
 DirectedRelation
-prec
+prec_{	ext{information}}
 CompositionalProcess
 ]
 
@@ -44,7 +44,7 @@ Strength:
 - explicit orientation.
 
 Failure:
-- no native path identity or composition semantics.
+- loses process identity and composition information.
 
 Status:
 - **FORMALIZED**.
@@ -52,10 +52,23 @@ Status:
 ### CompositionalProcess
 
 Strength:
-- candidate to encode path identity and compositional structure.
+- preserves process identity and composition outcomes not recoverable from induced edge existence alone.
+
+Established result:
+- two process systems can have the same states, processes, endpoints, and induced relation while having different composition laws.
 
 Risk:
-- may simply become category theory by assumption rather than derivation.
+- may still assume composition rather than derive it from weaker structure.
+
+Status:
+- **FORMALIZED / STRICTLY RICHER THAN RELATION PROJECTION FOR COMPOSITION INFORMATION**.
+
+### Next candidate
+
+**SequentialRewriteProcess**
+
+Question:
+- can part of composition be derived from weaker sequential/rewrite constraints rather than assumed as a primitive law?
 
 Status:
 - **NEXT TARGET**.
