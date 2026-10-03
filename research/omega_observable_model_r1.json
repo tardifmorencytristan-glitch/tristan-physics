@@ -1,0 +1,109 @@
+{
+  "id": "omega-observable-preservation-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "QuotientSystem",
+      "statement": "There is a carrier X with an equivalence relation and quotient map q:X->X/~.",
+      "operational_definition": "A set, an equivalence relation, and quotient projection.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "Observable",
+      "statement": "There is a real-valued observable f:X->R.",
+      "operational_definition": "A function from the carrier to real values.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "ObservableOscillation",
+      "depends_on": ["QuotientSystem", "Observable"],
+      "statement": "epsilon_f is the supremum of |f(x)-f(y)| over equivalent x,y."
+    },
+    {
+      "name": "ExactObservableDescent",
+      "depends_on": ["QuotientSystem", "Observable"],
+      "statement": "There exists f_bar on the quotient such that f=f_bar o q."
+    },
+    {
+      "name": "ApproximateObservableDescent",
+      "depends_on": ["ObservableOscillation"],
+      "statement": "A quotient observable approximates f within a declared pointwise error bound."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T16",
+      "kind": "THEOREM",
+      "statement": "An observable descends exactly to the quotient iff it is constant on every equivalence class.",
+      "depends_on": ["ExactObservableDescent"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_OBSERVABLE_RESULTS_R1.md#t16--exact-observable-descent-iff-class-constancy"]
+    },
+    {
+      "id": "T17",
+      "kind": "THEOREM",
+      "statement": "If within-class oscillation is at most epsilon, any representative-based quotient observable has pointwise error at most epsilon.",
+      "depends_on": ["ObservableOscillation", "ApproximateObservableDescent"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_OBSERVABLE_RESULTS_R1.md#t17--epsilon-oscillation-gives-epsilon-representative-error"]
+    },
+    {
+      "id": "T18",
+      "kind": "THEOREM",
+      "statement": "For real-valued observables with class extrema, the class midpoint quotient observable has worst-case error at most epsilon/2.",
+      "depends_on": ["T17"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_OBSERVABLE_RESULTS_R1.md#t18--midpoint-observable-gives-epsilon2-for-real-valued-observables"]
+    },
+    {
+      "id": "N8",
+      "kind": "NO_GO",
+      "statement": "Preservation of selected operations does not imply preservation of arbitrary observables.",
+      "depends_on": ["T16"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_OBSERVABLE_RESULTS_R1.md#n8--operation-preservation-does-not-imply-observable-preservation"]
+    },
+    {
+      "id": "C9",
+      "kind": "CONJECTURE",
+      "statement": "Useful effective physical descriptions may be characterized by bounded residuals for a selected observable family under approximate quotient maps.",
+      "depends_on": ["T17", "T18", "N8"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "WithinClassOscillation",
+      "definition": "Maximum or supremum variation of an observable inside quotient classes.",
+      "units": "observable-dependent",
+      "domain": "quotient toy models"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T16",
+      "condition": "Give an exactly descended observable that is not class-constant, or a class-constant observable that does not descend.",
+      "target_claims": ["T16"]
+    },
+    {
+      "id": "F-T18",
+      "condition": "For a real-valued class with finite extrema, produce midpoint error exceeding half the class oscillation.",
+      "target_claims": ["T18"]
+    }
+  ],
+  "residual_axes": [
+    "observable_preservation",
+    "observable_oscillation",
+    "approximation_error",
+    "information_loss"
+  ],
+  "metadata": {
+    "purpose": "Formalize exact and approximate observable descent under quotient coarse-graining.",
+    "result": "OBSERVABLE_DESCENT_WITH_EXPLICIT_ERROR_BOUNDS",
+    "pc_evidence_file": "research/omega_r10_pc_evidence.json",
+    "not_physical_validation": true
+  }
+}
