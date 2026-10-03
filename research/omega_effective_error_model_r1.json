@@ -1,0 +1,124 @@
+{
+  "id": "omega-effective-error-budget-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "ApproximationChain",
+      "statement": "There are maps q_i:X_(i-1)->X_i and observables f_i:X_i->R.",
+      "operational_definition": "A finite sequence of spaces, maps, and real-valued observables.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "StageResidualBound",
+      "statement": "Each stage residual is bounded by a nonnegative epsilon_i.",
+      "operational_definition": "A declared uniform bound per stage.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "SensitivityBound",
+      "statement": "Downstream maps may have nonnegative Lipschitz factors L_i.",
+      "operational_definition": "A declared Lipschitz or sensitivity bound.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "TotalResidualBudget",
+      "depends_on": ["ApproximationChain", "StageResidualBound"],
+      "statement": "The additive stage budget is the sum of epsilon_i."
+    },
+    {
+      "name": "PropagatedResidualBudget",
+      "depends_on": ["StageResidualBound", "SensitivityBound"],
+      "statement": "Errors obey e_(i+1)<=L_i e_i+delta_i and are propagated through later sensitivities."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T19",
+      "kind": "THEOREM",
+      "statement": "A k-stage observable approximation has total error at most the sum of its per-stage residual bounds.",
+      "depends_on": ["TotalResidualBudget"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md"]
+    },
+    {
+      "id": "T20",
+      "kind": "THEOREM",
+      "statement": "Zero residual at every stage implies exact observable descent through the composite map.",
+      "depends_on": ["T19"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md"]
+    },
+    {
+      "id": "T21",
+      "kind": "THEOREM",
+      "statement": "An L-Lipschitz post-processing map multiplies an input error bound epsilon by at most L.",
+      "depends_on": ["SensitivityBound"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md"]
+    },
+    {
+      "id": "T22",
+      "kind": "THEOREM",
+      "statement": "For e_(i+1)<=L_i e_i+delta_i, the propagated bound is the inherited product term plus each local residual times all later sensitivity factors.",
+      "depends_on": ["PropagatedResidualBudget"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md"]
+    },
+    {
+      "id": "N9",
+      "kind": "NO_GO",
+      "statement": "Small local or initial residuals alone do not guarantee a small final residual when repeated dynamics amplify discrepancies.",
+      "depends_on": ["T21", "T22"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md"]
+    },
+    {
+      "id": "C10",
+      "kind": "CONJECTURE",
+      "statement": "Useful effective physical models can expose a compositional proof-carrying error budget whose predicted residual envelope contains observed model discrepancy in a declared domain.",
+      "depends_on": ["T19", "T22", "N9"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "StageResidual",
+      "definition": "Absolute discrepancy introduced at one approximation stage.",
+      "units": "observable-dependent",
+      "domain": "finite approximation chains"
+    },
+    {
+      "name": "PropagatedResidualBudget",
+      "definition": "Worst-case final discrepancy after sensitivity-weighted propagation.",
+      "units": "observable-dependent",
+      "domain": "finite approximation chains"
+    }
+  ],
+  "falsifiers": [
+    {
+      "id": "F-T19",
+      "condition": "Produce a chain satisfying all declared stage residual bounds whose total observable discrepancy exceeds their sum.",
+      "target_claims": ["T19"]
+    },
+    {
+      "id": "F-T22",
+      "condition": "Produce nonnegative L_i and delta_i satisfying the recurrence but violating the stated closed-form bound.",
+      "target_claims": ["T22"]
+    }
+  ],
+  "residual_axes": [
+    "stage_residual",
+    "propagated_residual",
+    "sensitivity_amplification",
+    "multi_stage_coarse_graining"
+  ],
+  "metadata": {
+    "purpose": "Formalize compositional error budgets for repeated effective descriptions.",
+    "result": "MULTISTAGE_ERROR_BUDGET_WITH_SENSITIVITY_PROPAGATION",
+    "pc_evidence_file": "research/omega_r11_pc_evidence.json",
+    "not_physical_validation": true
+  }
+}

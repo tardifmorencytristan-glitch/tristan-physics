@@ -1,0 +1,52 @@
+{
+  "status": "READ_BACK_VERIFIED_3PC",
+  "date": "2026-10-03",
+  "mission": "omega_r11_effective_error_budgets",
+  "branch": "omega-r11-effective-error-budgets",
+  "head": "6b2066ecfd6a84128ebfc2181e25d2d0e3e3ef96",
+  "devices": [
+    {
+      "device": "DESKTOP-SHA9IHL",
+      "role": "GENERATOR_FORGE",
+      "tests": {"passed": 32, "failed": 0, "exit_code": 0},
+      "result": {
+        "additive_budget": 0.75,
+        "recurrence_closed_form": 1.1750000000000003,
+        "recurrence_iterative": 1.175,
+        "recurrence_match": true,
+        "amplification_initial": 0.0625,
+        "amplification_final": 1.0,
+        "amplification_factor": 16.0
+      }
+    },
+    {
+      "device": "DESKTOP-2G1SSMT",
+      "role": "OAK_INTEGRATOR",
+      "tests": {"passed": 32, "failed": 0, "exit_code": 0},
+      "result": {
+        "additive_budget": 0.75,
+        "recurrence_closed_form": 1.1750000000000003,
+        "recurrence_iterative": 1.175,
+        "recurrence_match": true,
+        "amplification_initial": 0.0625,
+        "amplification_final": 1.0,
+        "amplification_factor": 16.0
+      }
+    },
+    {
+      "device": "LAPTOP-AIU36QN6",
+      "role": "INDEPENDENT_VERIFIER",
+      "tests": {"passed": 32, "failed": 0, "exit_code": 0},
+      "result": {
+        "additive_budget": 0.75,
+        "recurrence_closed_form": 1.1750000000000003,
+        "recurrence_iterative": 1.175,
+        "recurrence_match": true,
+        "amplification_initial": 0.0625,
+        "amplification_final": 1.0,
+        "amplification_factor": 16.0
+      }
+    }
+  ],
+  "boundary": "These receipts verify software execution and toy-model calculations only; they do not constitute empirical validation of particle or field physics."
+}
