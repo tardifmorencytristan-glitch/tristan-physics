@@ -2,7 +2,13 @@
 """R16: rescaling court and finite autonomy gate for projected RG."""
 
 from functools import lru_cache
-from math import exp, fsum, log, sqrt
+from math import fsum, log, sqrt
+from pathlib import Path
+import sys
+
+TOOLS_DIR = str(Path(__file__).resolve().parent)
+if TOOLS_DIR not in sys.path:
+    sys.path.insert(0, TOOLS_DIR)
 
 import verify_coupling_flow_geometry as r15
 
