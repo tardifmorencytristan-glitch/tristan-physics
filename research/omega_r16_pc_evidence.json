@@ -1,0 +1,46 @@
+{
+  "status": "READ_BACK_VERIFIED_3PC",
+  "date": "2026-10-04",
+  "mission": "omega_r16_autonomous_rescaled_rg",
+  "branch": "omega-r16-autonomous-rescaled-rg",
+  "verification_head": "19570a0c8375b050ac8c7f08931a0e71f1701247",
+  "common_result": {
+    "reference_theta": [1.0025373737493564, 6.336155263803127, -6.897723845947594],
+    "reference_alphabet": [-1.0, -0.5, 0.0, 0.5, 1.0],
+    "support_witness": {
+      "n8_input": 390625,
+      "n8_output": 6561,
+      "n4_input": 625,
+      "n4_output": 81
+    },
+    "court": [
+      {"scheme": "BOLTZMANN_M2_MATCH", "map_relative_discrepancy": 0.043242478789013494, "n8_scale": 1.2923132299208768, "n4_scale": 1.2883319952219607},
+      {"scheme": "SUPPORT_M2_MATCH", "map_relative_discrepancy": 0.04344924397300383, "n8_scale": 1.0954451150103321, "n4_scale": 1.0954451150103321},
+      {"scheme": "NONE", "map_relative_discrepancy": 0.04798366312934844, "n8_scale": 1.0, "n4_scale": 1.0},
+      {"scheme": "KINETIC_MATCH", "map_relative_discrepancy": 0.048648456193393995, "n8_scale": 1.0003926785927215, "n4_scale": 1.0}
+    ],
+    "winner": "BOLTZMANN_M2_MATCH",
+    "winner_map_relative_discrepancy": 0.043242478789013494,
+    "jacobian_cross_scale_relative_discrepancy": 0.20414221604038493,
+    "finite_difference_stability_n8": 6.241222106346949e-10,
+    "finite_difference_stability_n4": 6.445898698970088e-10,
+    "map_gate_pass": true,
+    "jacobian_gate_pass": false,
+    "finite_difference_gate_pass": true,
+    "autonomy_gate_pass": false,
+    "fixed_point_status": "BLOCKED_NONAUTONOMOUS_FINITE_SIZE_DEPENDENCE",
+    "algorithm": "SUFFICIENT_STATISTICS_PLUS_ANALYTIC_FIELD_SCALE"
+  },
+  "devices": [
+    {"device": "DESKTOP-SHA9IHL", "role": "GENERATOR_FORGE", "tests": {"passed": 61, "failed": 0, "exit_code": 0}},
+    {"device": "DESKTOP-2G1SSMT", "role": "OAK_INTEGRATOR", "tests": {"passed": 61, "failed": 0, "exit_code": 0}},
+    {"device": "LAPTOP-AIU36QN6", "role": "INDEPENDENT_VERIFIER", "tests": {"passed": 61, "failed": 0, "exit_code": 0}}
+  ],
+  "negative_memory": {
+    "initial_algorithm": "REPEATED_FULL_ENUMERATION_PER_GAUGE_AND_PERTURBATION",
+    "status": "TERMINATED_FOR_PERFORMANCE",
+    "scientific_result": "NONE",
+    "replacement": "SUFFICIENT_STATISTICS_PLUS_ANALYTIC_FIELD_SCALE"
+  },
+  "boundary": "Finite lattice rescaling/autonomy witness only; not continuum RG, beta functions, fixed points, critical exponents, or empirical particle physics."
+}
