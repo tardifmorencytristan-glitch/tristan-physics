@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """R16: rescaling court and finite autonomy gate for projected RG."""
 
+from collections import defaultdict
 from functools import lru_cache
-from math import fsum, log, sqrt
+from math import exp, fsum, log, sqrt
 from pathlib import Path
 import sys
 
@@ -50,25 +51,80 @@ def m2_state(state):
     return fsum(float(x) ** 2 for x in state) / len(state)
 
 
-def weighted_m2(weight_map):
-    z = fsum(weight_map.values())
-    return fsum(weight * m2_state(state) for state, weight in weight_map.items()) / z
-
-
 def uniform_alphabet_m2(values):
     return fsum(float(x) ** 2 for x in values) / len(values)
 
 
-def rescale_weight_map(weight_map, scale):
-    if not (scale > 0.0):
-        raise ValueError("field scale must be positive")
+@lru_cache(maxsize=4)
+def precomputed_records(values, sites):
+    """Precompute exact-domain sufficient statistics for the linear action."""
+    records = []
+    for state in r15.enumerate_states(values, sites):
+        xs = tuple(float(x) for x in state)
+        kinetic = fsum(
+            0.5 * (xs[(i + 1) % sites] - xs[i]) ** 2
+            for i in range(sites)
+        )
+        mass = fsum(0.5 * x * x for x in xs)
+        quartic = fsum(0.25 * x ** 4 for x in xs)
+        m2 = fsum(x * x for x in xs) / sites
+        block = tuple(
+            0.5 * (xs[i] + xs[i + 1])
+            for i in range(0, sites, 2)
+        )
+        records.append((block, kinetic, mass, quartic, m2))
+    return tuple(records)
+
+
+@lru_cache(maxsize=96)
+def raw_projected_step(values, sites, params):
+    """Compute one raw push-forward/projection, shared by all rescaling gauges."""
+    params = tuple(float(x) for x in params)
+    kappa, mass2, lam = params
+    coarse = defaultdict(float)
+
+    input_m2_sum = 0.0
+    input_m2_comp = 0.0
+
+    records = precomputed_records(tuple(values), sites)
+    for block, kinetic, mass, quartic, m2 in records:
+        weight = exp(-(kappa * kinetic + mass2 * mass + lam * quartic))
+        coarse[block] += weight
+
+        term = weight * m2
+        y = term - input_m2_comp
+        t = input_m2_sum + y
+        input_m2_comp = (t - input_m2_sum) - y
+        input_m2_sum = t
+
+    coarse = dict(coarse)
+    z = fsum(coarse.values())
+    input_m2 = input_m2_sum / z
+    coarse_m2 = fsum(
+        weight * m2_state(state)
+        for state, weight in coarse.items()
+    ) / z
+
+    fit = r15.fit_base_effective_action(coarse)
+    output_sites = sites // 2
+    raw_params = tuple(
+        r15.physical_params_from_coefficients(
+            fit["coefficients"], output_sites
+        )
+    )
     return {
-        tuple(scale * float(x) for x in state): weight
-        for state, weight in weight_map.items()
+        "raw_params": raw_params,
+        "coarse": coarse,
+        "input_m2": input_m2,
+        "coarse_m2": coarse_m2,
+        "fit_rms": fit["rms"],
+        "fit_max_abs": fit["max_abs"],
+        "input_support": len(records),
+        "output_support": len(coarse),
     }
 
 
-def choose_scale(scheme, values, params, fine, coarse):
+def choose_scale(scheme, values, params, raw):
     if scheme == "NONE":
         return 1.0
 
@@ -79,20 +135,14 @@ def choose_scale(scheme, values, params, fine, coarse):
         return sqrt(source / target)
 
     if scheme == "BOLTZMANN_M2_MATCH":
-        source = weighted_m2(fine)
-        target = weighted_m2(coarse)
+        target = raw["coarse_m2"]
         if target <= 0.0:
             raise ValueError("coarse Boltzmann M2 must be positive")
-        return sqrt(source / target)
+        return sqrt(raw["input_m2"] / target)
 
     if scheme == "KINETIC_MATCH":
-        raw_fit = r15.fit_base_effective_action(coarse)
-        output_sites = len(next(iter(coarse)))
-        raw_params = r15.physical_params_from_coefficients(
-            raw_fit["coefficients"], output_sites
-        )
         kappa_in = float(params[0])
-        kappa_raw = float(raw_params[0])
+        kappa_raw = float(raw["raw_params"][0])
         ratio = kappa_raw / kappa_in
         if ratio <= 0.0:
             raise ValueError("kinetic matching requires positive kappa ratio")
@@ -101,30 +151,48 @@ def choose_scale(scheme, values, params, fine, coarse):
     raise ValueError("unknown scheme: " + scheme)
 
 
+def transform_params_under_field_scale(raw_params, scale):
+    """For z=scale*y: kappa,m2 scale as scale^-2 and lambda as scale^-4."""
+    kappa, mass2, lam = raw_params
+    s2 = scale * scale
+    return (kappa / s2, mass2 / s2, lam / (s2 * s2))
+
+
 @lru_cache(maxsize=256)
 def projected_rescaled_map(values, sites, params, scheme):
     values = tuple(values)
     params = tuple(float(x) for x in params)
-    fine = r15.parametric_weight_map(values, sites, params)
-    coarse = r15.pushforward_weights(fine)
-    scale = choose_scale(scheme, values, params, fine, coarse)
-    transformed = rescale_weight_map(coarse, scale)
-    fit = r15.fit_base_effective_action(transformed)
-    output_sites = sites // 2
-    params_out = r15.physical_params_from_coefficients(
-        fit["coefficients"], output_sites
-    )
+    raw = raw_projected_step(values, sites, params)
+    scale = choose_scale(scheme, values, params, raw)
+    params_out = transform_params_under_field_scale(raw["raw_params"], scale)
     return {
-        "params_out": tuple(params_out),
+        "params_out": params_out,
         "scale": scale,
-        "fit_rms": fit["rms"],
-        "fit_max_abs": fit["max_abs"],
-        "input_support": len(fine),
-        "output_support": len(coarse),
-        "input_m2": weighted_m2(fine),
-        "coarse_m2_before_rescale": weighted_m2(coarse),
-        "coarse_m2_after_rescale": scale * scale * weighted_m2(coarse),
+        "fit_rms": raw["fit_rms"],
+        "fit_max_abs": raw["fit_max_abs"],
+        "input_support": raw["input_support"],
+        "output_support": raw["output_support"],
+        "input_m2": raw["input_m2"],
+        "coarse_m2_before_rescale": raw["coarse_m2"],
+        "coarse_m2_after_rescale": scale * scale * raw["coarse_m2"],
     }
+
+
+def direct_rescaled_fit(values, sites, params, scheme):
+    """Independent small-support witness for the analytical coefficient transform."""
+    raw = raw_projected_step(tuple(values), sites, tuple(params))
+    scale = choose_scale(scheme, tuple(values), tuple(params), raw)
+    transformed = {
+        tuple(scale * float(x) for x in state): weight
+        for state, weight in raw["coarse"].items()
+    }
+    fit = r15.fit_base_effective_action(transformed)
+    direct = tuple(
+        r15.physical_params_from_coefficients(
+            fit["coefficients"], sites // 2
+        )
+    )
+    return direct
 
 
 def central_jacobian(values, sites, params, scheme, relative_step):
@@ -193,10 +261,7 @@ def fixed_point_iteration(values, theta0, scheme, max_iter=6):
         try:
             nxt = projected_rescaled_map(values, 8, theta, scheme)["params_out"]
         except (OverflowError, ValueError):
-            return {
-                "status": "SEARCH_FAILED_NUMERICALLY",
-                "history": history,
-            }
+            return {"status": "SEARCH_FAILED_NUMERICALLY", "history": history}
         residual = vector_distance(theta, nxt)
         history.append({"theta": theta, "next": nxt, "residual": residual})
         if residual < 1e-8:
@@ -207,10 +272,7 @@ def fixed_point_iteration(values, theta0, scheme, max_iter=6):
                 "history": history,
             }
         if l2(nxt) > 1e4:
-            return {
-                "status": "SEARCH_DIVERGED_BOUNDED",
-                "history": history,
-            }
+            return {"status": "SEARCH_DIVERGED_BOUNDED", "history": history}
         theta = tuple(0.5 * a + 0.5 * b for a, b in zip(theta, nxt))
     return {
         "status": "NO_FIXED_POINT_WITHIN_BOUNDED_ITERATION",
@@ -276,6 +338,7 @@ def verify():
             "n4_input": 5 ** 4,
             "n4_output": 9 ** 2,
         },
+        "algorithm": "SUFFICIENT_STATISTICS_PLUS_ANALYTIC_FIELD_SCALE",
     }
 
 
