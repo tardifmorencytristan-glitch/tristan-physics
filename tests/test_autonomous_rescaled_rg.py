@@ -39,6 +39,16 @@ class AutonomousRescaledRGTests(unittest.TestCase):
         r = MODULE.verify()
         self.assertEqual(r["reference_alphabet"], [-1.0, -0.5, 0.0, 0.5, 1.0])
 
+    def test_analytic_rescaling_matches_direct_refit_on_small_support(self):
+        r = MODULE.verify()
+        theta = tuple(r["reference_theta"])
+        values = tuple(MODULE.r15.next_alphabet(MODULE.r15.INITIAL_VALUES))
+        scheme = r["winner"]
+        analytic = MODULE.projected_rescaled_map(values, 4, theta, scheme)["params_out"]
+        direct = MODULE.direct_rescaled_fit(values, 4, theta, scheme)
+        for a, b in zip(analytic, direct):
+            self.assertAlmostEqual(a, b, places=9)
+
     def test_fixed_point_gate_is_consistent(self):
         r = MODULE.verify()
         if r["autonomy_gate_pass"]:
