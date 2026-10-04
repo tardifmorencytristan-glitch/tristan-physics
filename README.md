@@ -18,6 +18,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Lattice Phi4 Bridge Results R1](docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md)
 - [Ω Effective-Action Discovery Results R1](docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md)
 - [Ω Multiscale RG Flow Results R1](docs/OMEGA_MULTISCALE_RG_FLOW_R1.md)
+- [Ω Coupling-Flow Geometry Results R1](docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -44,6 +45,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega R13 three-PC evidence](research/omega_r13_pc_evidence.json)
 - [Omega multiscale RG model R1](research/omega_multiscale_rg_model_r1.json)
 - [Omega R14 three-PC evidence](research/omega_r14_pc_evidence.json)
+- [Omega coupling-flow model R1](research/omega_coupling_flow_model_r1.json)
+- [Omega R15 three-PC evidence](research/omega_r15_pc_evidence.json)
 
 ## Verification tools
 
@@ -59,6 +62,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_lattice_phi4_bridge.py`
 - `tools/verify_effective_action_discovery.py`
 - `tools/verify_multiscale_rg_flow.py`
+- `tools/verify_coupling_flow_geometry.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -100,7 +104,12 @@ Proved toy-model results currently include:
 - finite push-forward preserves partition weight across every tested scale,
 - exact support-level effective actions inherit Z2 symmetry at every tested scale,
 - the restricted retained operator family is not exactly closed under the tested multiscale flow,
-- operator identifiability and ranking can change with scale as well as objective.
+- operator identifiability and ranking can change with scale as well as objective,
+- ternary scalar fields alias phi^4 with phi^2 and make microscopic mass/quartic directions non-identifiable,
+- central finite-difference projected-RG Jacobians are stable under the tested step refinement,
+- after one block step the enriched alphabet restores a locally identifiable 3D projected coupling geometry,
+- recursive retained-basis projection does not commute with exact multistep push-forward,
+- fixed-point language requires an explicit autonomous field-rescaling convention before it is admissible.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
