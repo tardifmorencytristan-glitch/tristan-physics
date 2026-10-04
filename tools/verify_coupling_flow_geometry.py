@@ -146,11 +146,6 @@ def exact_two_level_projection():
     f2 = fit_base_effective_action(w2)
     p1 = physical_params_from_coefficients(f1["coefficients"], 4)
     p2 = physical_params_from_coefficients(f2["coefficients"], 2)
-    level0_null_direction = (0.0, -0.5, 1.0)
-    level0_null_residual = vector_norm(matvec(j0_h2, level0_null_direction))
-    level0_alias_column_error = max(
-        abs(j0_h2[i][2] - 0.5 * j0_h2[i][1]) for i in range(3)
-    )
 
     return {
         "p0": p0,
@@ -329,6 +324,12 @@ def verify():
     j1_delta = matrix_sub_max_abs(j1_h, j1_h2)
     j0_relative = j0_delta / max(1.0, matrix_max_abs(j0_h2))
     j1_relative = j1_delta / max(1.0, matrix_max_abs(j1_h2))
+
+    level0_null_direction = (0.0, -0.5, 1.0)
+    level0_null_residual = vector_norm(matvec(j0_h2, level0_null_direction))
+    level0_alias_column_error = max(
+        abs(j0_h2[i][2] - 0.5 * j0_h2[i][1]) for i in range(3)
+    )
 
     return {
         "p0": p0,
