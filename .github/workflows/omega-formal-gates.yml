@@ -59,6 +59,8 @@ jobs:
           python -m json.tool research/omega_r14_pc_evidence.json >/dev/null
           python -m json.tool research/omega_coupling_flow_model_r1.json >/dev/null
           python -m json.tool research/omega_r15_pc_evidence.json >/dev/null
+          python -m json.tool research/omega_autonomous_rg_model_r1.json >/dev/null
+          python -m json.tool research/omega_r16_pc_evidence.json >/dev/null
 
       - name: Dependency DAG and anti-circularity gate
         run: |
@@ -70,7 +72,8 @@ jobs:
             research/omega_lattice_phi4_model_r1.json \
             research/omega_effective_action_model_r1.json \
             research/omega_multiscale_rg_model_r1.json \
-            research/omega_coupling_flow_model_r1.json
+            research/omega_coupling_flow_model_r1.json \
+            research/omega_autonomous_rg_model_r1.json
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
@@ -110,3 +113,6 @@ jobs:
 
       - name: Coupling-flow geometry verifier
         run: python tools/verify_coupling_flow_geometry.py
+
+      - name: Autonomous rescaled RG verifier
+        run: python tools/verify_autonomous_rescaled_rg.py
