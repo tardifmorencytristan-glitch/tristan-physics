@@ -1,0 +1,99 @@
+{
+  "id": "omega-autonomous-rescaled-rg-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "CommonReferenceDomain",
+      "statement": "Both finite projected maps use the same five-value input alphabet {-1,-1/2,0,1/2,1}.",
+      "operational_definition": "Compare N=8->4 and N=4->2 on identical input field values and projected coupling coordinates.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "RescalingCourt",
+      "statement": "Four declared field normalizations compete by cross-size projected-map discrepancy.",
+      "operational_definition": "NONE, SUPPORT_M2_MATCH, BOLTZMANN_M2_MATCH, KINETIC_MATCH.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "AutonomyGate",
+      "statement": "A finite rescaled RG map is admitted as locally autonomous only if map, Jacobian, and finite-difference gates all pass.",
+      "operational_definition": "d_map<=0.05, d_J<=0.10, finite-difference instability<=1e-4.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "FieldScaleCouplingTransform",
+      "depends_on": ["CommonReferenceDomain"],
+      "statement": "Under z=a*y, kappa and m2 scale as a^-2 while lambda scales as a^-4."
+    },
+    {
+      "name": "CrossScaleMapResidual",
+      "depends_on": ["RescalingCourt"],
+      "statement": "Relative L2 discrepancy between N=8 and N=4 projected maps at the same reference coupling."
+    },
+    {
+      "name": "CrossScaleJacobianResidual",
+      "depends_on": ["AutonomyGate"],
+      "statement": "Relative Frobenius discrepancy between the refined N=8 and N=4 local projected-map Jacobians."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T39",
+      "kind": "THEOREM",
+      "statement": "The declared field coordinate rescaling transforms projected couplings as kappa->kappa/a^2, m2->m2/a^2, lambda->lambda/a^4.",
+      "depends_on": ["FieldScaleCouplingTransform"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md"]
+    },
+    {
+      "id": "T40",
+      "kind": "FINITE_RESULT",
+      "statement": "BOLTZMANN_M2_MATCH minimizes the tested cross-size map residual and passes the declared 0.05 map-level gate at the R15 reference point.",
+      "depends_on": ["RescalingCourt", "CrossScaleMapResidual", "T39"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md"]
+    },
+    {
+      "id": "T41",
+      "kind": "FINITE_RESULT",
+      "statement": "The winning-scheme Jacobians are stable under halving the finite-difference step within the declared tolerance.",
+      "depends_on": ["AutonomyGate", "T40"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md"]
+    },
+    {
+      "id": "N16",
+      "kind": "FINITE_NO_GO",
+      "statement": "The winning normalization fails the declared Jacobian-autonomy gate despite passing the map-level gate.",
+      "depends_on": ["CrossScaleJacobianResidual", "T40", "T41"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md"]
+    },
+    {
+      "id": "N17",
+      "kind": "METHODOLOGICAL_NO_GO",
+      "statement": "Fixed-point search remains inadmissible because the complete finite autonomy gate fails.",
+      "depends_on": ["AutonomyGate", "N16"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md"]
+    },
+    {
+      "id": "C15",
+      "kind": "CONJECTURE",
+      "statement": "Adding symmetry-compatible effective operators can reduce cross-size Jacobian mismatch enough to pass a future autonomy gate.",
+      "depends_on": ["N16", "N17"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "metadata": {
+    "purpose": "Test whether explicit field rescaling is sufficient to make the finite projected RG locally autonomous across sizes.",
+    "result": "MAP_GATE_PASS_JACOBIAN_GATE_FAIL_FIXED_POINT_BLOCKED",
+    "parent_model": "omega-coupling-flow-geometry-r1",
+    "pc_evidence_file": "research/omega_r16_pc_evidence.json",
+    "not_continuum_rg_validation": true,
+    "not_empirical_validation": true
+  }
+}
