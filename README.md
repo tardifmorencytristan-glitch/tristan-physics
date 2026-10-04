@@ -19,6 +19,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Effective-Action Discovery Results R1](docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md)
 - [Ω Multiscale RG Flow Results R1](docs/OMEGA_MULTISCALE_RG_FLOW_R1.md)
 - [Ω Coupling-Flow Geometry Results R1](docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md)
+- [Ω Autonomous Rescaled RG Results R1](docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -47,6 +48,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega R14 three-PC evidence](research/omega_r14_pc_evidence.json)
 - [Omega coupling-flow model R1](research/omega_coupling_flow_model_r1.json)
 - [Omega R15 three-PC evidence](research/omega_r15_pc_evidence.json)
+- [Omega autonomous rescaled RG model R1](research/omega_autonomous_rg_model_r1.json)
+- [Omega R16 three-PC evidence](research/omega_r16_pc_evidence.json)
 
 ## Verification tools
 
@@ -63,6 +66,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_effective_action_discovery.py`
 - `tools/verify_multiscale_rg_flow.py`
 - `tools/verify_coupling_flow_geometry.py`
+- `tools/verify_autonomous_rescaled_rg.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -109,7 +113,11 @@ Proved toy-model results currently include:
 - central finite-difference projected-RG Jacobians are stable under the tested step refinement,
 - after one block step the enriched alphabet restores a locally identifiable 3D projected coupling geometry,
 - recursive retained-basis projection does not commute with exact multistep push-forward,
-- fixed-point language requires an explicit autonomous field-rescaling convention before it is admissible.
+- fixed-point language requires an explicit autonomous field-rescaling convention before it is admissible,
+- explicit field-rescaling gauges can reduce cross-size projected-map discrepancy on a common reference alphabet,
+- Boltzmann second-moment matching is the best tested R16 map-level normalization at the declared reference point,
+- map-level cross-size agreement does not imply Jacobian-level autonomy,
+- the R16 fixed-point gate remains blocked because the winning normalization fails the declared Jacobian-autonomy threshold.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
