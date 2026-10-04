@@ -202,12 +202,23 @@ def analyze_level(level_index, weight_map):
 
     court = []
     for candidate in candidate_operators(site_count):
-        extended = fit_action(states, exact_action, base_ops + (candidate,))
+        try:
+            extended = fit_action(states, exact_action, base_ops + (candidate,))
+        except ValueError:
+            court.append(
+                {
+                    "candidate": candidate,
+                    "status": "REDUNDANT_OR_SINGULAR",
+                }
+            )
+            continue
+
         q = distribution_from_action(extended["predicted"])
         candidate_kl = kl_divergence(probabilities, q)
         court.append(
             {
                 "candidate": candidate,
+                "status": "FIT",
                 "rss": extended["rss"],
                 "rms": extended["rms"],
                 "max_abs": extended["max_abs"],
@@ -217,8 +228,12 @@ def analyze_level(level_index, weight_map):
             }
         )
 
-    best_action = max(court, key=lambda x: (x["action_gain"], x["candidate"]))
-    best_kl = max(court, key=lambda x: (x["kl_gain"], x["candidate"]))
+    fitted = [item for item in court if item["status"] == "FIT"]
+    if not fitted:
+        raise ValueError("no identifiable candidate extension at this level")
+
+    best_action = max(fitted, key=lambda x: (x["action_gain"], x["candidate"]))
+    best_kl = max(fitted, key=lambda x: (x["kl_gain"], x["candidate"]))
 
     return {
         "level": level_index,
@@ -323,7 +338,7 @@ def main():
         if level["base_max_abs"] <= 1e-8:
             raise SystemExit("FAIL restricted base ansatz unexpectedly exact")
         for item in level["court"]:
-            if item["action_gain"] < -tol:
+            if item["status"] == "FIT" and item["action_gain"] < -tol:
                 raise SystemExit("FAIL nested operator-space monotonicity")
 
     print("PASS multiscale RG flow verifier")
