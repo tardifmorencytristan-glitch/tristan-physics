@@ -146,6 +146,12 @@ def exact_two_level_projection():
     f2 = fit_base_effective_action(w2)
     p1 = physical_params_from_coefficients(f1["coefficients"], 4)
     p2 = physical_params_from_coefficients(f2["coefficients"], 2)
+    level0_null_direction = (0.0, -0.5, 1.0)
+    level0_null_residual = vector_norm(matvec(j0_h2, level0_null_direction))
+    level0_alias_column_error = max(
+        abs(j0_h2[i][2] - 0.5 * j0_h2[i][1]) for i in range(3)
+    )
+
     return {
         "p0": p0,
         "p1_exact_projection": p1,
@@ -295,6 +301,14 @@ def vector_l2(a, b):
     return sqrt(fsum((x - y) ** 2 for x, y in zip(a, b)))
 
 
+def matvec(a, v):
+    return [fsum(a[i][j] * v[j] for j in range(3)) for i in range(3)]
+
+
+def vector_norm(v):
+    return sqrt(fsum(x * x for x in v))
+
+
 def verify():
     exact = exact_two_level_projection()
     p0 = exact["p0"]
@@ -334,7 +348,11 @@ def verify():
         "jacobian_level1_det": determinant3(j1_h2),
         "jacobian_level0_condition_frobenius": condition_frobenius(j0_h2),
         "jacobian_level1_condition_frobenius": condition_frobenius(j1_h2),
-        "eigen_level0": eigen_summary(j0_h2),
+        "level0_identifiability": "RANK_DEFICIENT_BY_TERNARY_ALIAS_PHI4_EQ_PHI2",
+        "level0_null_direction": level0_null_direction,
+        "level0_null_residual": level0_null_residual,
+        "level0_alias_column_error": level0_alias_column_error,
+        "eigen_level0_status": "DO_NOT_INTERPRET_3D_EIGENMODES",
         "eigen_level1": eigen_summary(j1_h2),
         "steps_level0_h": steps0_h,
         "steps_level0_h2": steps0_h2,
@@ -355,14 +373,20 @@ def main():
         raise SystemExit("FAIL R15 level0 finite-difference stability")
     if result["jacobian_level1_step_stability_rel"] > 1e-4:
         raise SystemExit("FAIL R15 level1 finite-difference stability")
-    if abs(result["jacobian_level0_det"]) <= 1e-10:
-        raise SystemExit("FAIL R15 level0 Jacobian singular")
+    if result["level0_identifiability"] != "RANK_DEFICIENT_BY_TERNARY_ALIAS_PHI4_EQ_PHI2":
+        raise SystemExit("FAIL R15 level0 alias classification")
+    if result["level0_null_residual"] > 1e-7:
+        raise SystemExit("FAIL R15 level0 analytical null direction")
+    if result["level0_alias_column_error"] > 1e-7:
+        raise SystemExit("FAIL R15 level0 mass/quartic alias")
+    if result["jacobian_level0_condition_frobenius"] < 1e8:
+        raise SystemExit("FAIL R15 expected level0 ill-conditioning")
     if abs(result["jacobian_level1_det"]) <= 1e-10:
         raise SystemExit("FAIL R15 level1 Jacobian singular")
-    if not isfinite(result["jacobian_level0_condition_frobenius"]):
-        raise SystemExit("FAIL R15 level0 condition")
     if not isfinite(result["jacobian_level1_condition_frobenius"]):
         raise SystemExit("FAIL R15 level1 condition")
+    if result["jacobian_level1_condition_frobenius"] > 1e4:
+        raise SystemExit("FAIL R15 level1 unexpectedly ill-conditioned")
     if result["projection_closure_l2"] <= 1e-8:
         raise SystemExit("FAIL R15 expected nonzero recursive projection drift")
     if result["fixed_point_status"] != "NOT_WELL_DEFINED_WITHOUT_FIELD_RESCALE_AND_AUTONOMOUS_COORDINATES":
