@@ -1,0 +1,31 @@
+{
+  "status": "READ_BACK_VERIFIED_3PC",
+  "date": "2026-10-04",
+  "mission": "omega_r15_coupling_flow_geometry",
+  "branch": "omega-r15-coupling-flow-geometry",
+  "verification_head": "8a5703ec46bcbe56baa13add7e0816a873592236",
+  "common_result": {
+    "p0": [1.0, 1.0, 1.0],
+    "p1_exact_projection": [1.0025373737493564, 6.336155263803127, -6.897723845947594],
+    "p2_exact_projection": [0.8698677071359057, 6.676551620515189, -0.6908425270106108],
+    "p2_projected_recursive": [1.0025373737493564, 6.7500880930182365, -1.4597114685670747],
+    "projection_closure_l2": 0.7836889067210743,
+    "level0_identifiability": "RANK_DEFICIENT_BY_TERNARY_ALIAS_PHI4_EQ_PHI2",
+    "level0_null_direction": [0.0, -0.5, 1.0],
+    "level0_null_residual": 3.4555712597468572e-09,
+    "level0_alias_column_error": 2.97983859809392e-09,
+    "level0_condition_frobenius": 69796285181.73767,
+    "level1_determinant": 1.0732791572883524,
+    "level1_condition_frobenius": 18.645245175631917,
+    "level1_eigenvalue_magnitudes": [1.7877141625664503, 0.9999999999949493, 0.6003639618500127],
+    "level1_mode_classes": ["EXPANDING_FINITE_STEP", "NEAR_UNIT_FINITE_STEP", "CONTRACTING_FINITE_STEP"],
+    "jacobian_step_stability_relative": [6.067339808006931e-10, 1.4302659603173183e-09],
+    "fixed_point_status": "NOT_WELL_DEFINED_WITHOUT_FIELD_RESCALE_AND_AUTONOMOUS_COORDINATES"
+  },
+  "devices": [
+    {"device": "DESKTOP-SHA9IHL", "role": "GENERATOR_FORGE", "tests": {"passed": 55, "failed": 0, "exit_code": 0}},
+    {"device": "DESKTOP-2G1SSMT", "role": "OAK_INTEGRATOR", "tests": {"passed": 55, "failed": 0, "exit_code": 0}},
+    {"device": "LAPTOP-AIU36QN6", "role": "INDEPENDENT_VERIFIER", "tests": {"passed": 55, "failed": 0, "exit_code": 0}}
+  ],
+  "boundary": "Finite lattice projected-coupling geometry only; not continuum beta functions, critical exponents, fixed-point validation, or empirical particle physics."
+}
