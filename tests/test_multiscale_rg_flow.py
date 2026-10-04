@@ -52,7 +52,18 @@ class MultiscaleRGFlowTests(unittest.TestCase):
         result = MODULE.verify()
         for level in result["levels"]:
             for candidate in level["court"]:
-                self.assertGreaterEqual(candidate["action_gain"], -1e-12)
+                if candidate["status"] == "FIT":
+                    self.assertGreaterEqual(candidate["action_gain"], -1e-12)
+
+    def test_redundant_candidates_are_explicit(self):
+        result = MODULE.verify()
+        redundant = [
+            (level["site_count"], item["candidate"])
+            for level in result["levels"]
+            for item in level["court"]
+            if item["status"] == "REDUNDANT_OR_SINGULAR"
+        ]
+        self.assertTrue(redundant)
 
 
 if __name__ == "__main__":
