@@ -1,0 +1,93 @@
+{
+  "id": "omega-coupling-flow-geometry-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "ProjectedPhi4Coordinates",
+      "statement": "Finite effective actions are projected to theta=(kappa,m2,lambda) using the retained basis 1,M2,C1,M4.",
+      "operational_definition": "Extract kappa=-cC/N, m2=2*(c2/N-kappa), lambda=4*c4/N.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "ScaleDependentProjectedRG",
+      "statement": "A block push-forward followed by retained-basis projection defines a scale-dependent finite map R_k.",
+      "operational_definition": "Enumerate finite support, push Boltzmann weights, fit exact pushed action, extract projected coordinates.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "FiniteDifferenceGeometry",
+      "statement": "Local projected-RG Jacobians are estimated by central finite differences at two step sizes.",
+      "operational_definition": "Compare relative steps 1e-4 and 5e-5.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "ProjectionClosureDrift",
+      "depends_on": ["ProjectedPhi4Coordinates", "ScaleDependentProjectedRG"],
+      "statement": "L2 distance between exact two-step projected coordinates and recursively projected two-step coordinates."
+    },
+    {
+      "name": "FiniteStepMode",
+      "depends_on": ["FiniteDifferenceGeometry"],
+      "statement": "An eigenvalue of an identifiable local projected-RG Jacobian, classified by magnitude only."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T36",
+      "kind": "THEOREM",
+      "statement": "On the ternary alphabet {-1,0,1}, phi^4=phi^2 pointwise, so m2 and lambda are not separately identifiable; (0,-1/2,1) is an exact parameter null direction.",
+      "depends_on": ["ProjectedPhi4Coordinates"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md"]
+    },
+    {
+      "id": "T37",
+      "kind": "FINITE_RESULT",
+      "statement": "The measured local Jacobians are stable under halving the declared finite-difference step within the verified tolerance.",
+      "depends_on": ["FiniteDifferenceGeometry"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md"]
+    },
+    {
+      "id": "N14",
+      "kind": "FINITE_NO_GO",
+      "statement": "Recursive retained-basis projection does not reproduce exact two-step push-forward followed by projection in the finite witness.",
+      "depends_on": ["ProjectionClosureDrift"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md"]
+    },
+    {
+      "id": "T38",
+      "kind": "FINITE_RESULT",
+      "statement": "After one blocking step, the enriched field alphabet restores local 3D projected-coupling identifiability and yields one expanding, one near-unit, and one contracting finite-step eigenvalue magnitude.",
+      "depends_on": ["ScaleDependentProjectedRG", "FiniteDifferenceGeometry", "T36"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md"]
+    },
+    {
+      "id": "N15",
+      "kind": "METHODOLOGICAL_NO_GO",
+      "statement": "A fixed-point equation is not well defined before a field-rescaling convention makes the projected RG map autonomous on common coordinates.",
+      "depends_on": ["ScaleDependentProjectedRG"],
+      "status": "PROVED_BY_DEFINITIONAL_MISMATCH",
+      "evidence_refs": ["docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md"]
+    },
+    {
+      "id": "C14",
+      "kind": "CONJECTURE",
+      "statement": "An autonomous rescaled finite RG map can separate robust local flow geometry from coordinate artifacts and support falsifiable approximate fixed-point searches.",
+      "depends_on": ["T37", "T38", "N14", "N15"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "metadata": {
+    "purpose": "Measure finite projected coupling-flow geometry while enforcing identifiability and coordinate-validity gates.",
+    "result": "IDENTIFIABILITY_GATED_COUPLING_FLOW_GEOMETRY",
+    "pc_evidence_file": "research/omega_r15_pc_evidence.json",
+    "not_continuum_rg_validation": true,
+    "not_empirical_validation": true
+  }
+}
