@@ -1,0 +1,132 @@
+{
+  "id": "omega-multiscale-rg-flow-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "ExactRationalBlockMap",
+      "statement": "Two-site arithmetic averaging is performed on exact rational field values.",
+      "operational_definition": "Use Fraction-valued states and pairwise averaging.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "FineEightSiteBoltzmannMeasure",
+      "statement": "The microscopic witness is the periodic N=8 scalar lattice over {-1,0,1}^8 with kappa=m2=lambda=1.",
+      "operational_definition": "Enumerate all 6561 microscopic states and weight by exp(-S).",
+      "status": "AXIOM"
+    },
+    {
+      "name": "ScaleWiseProjectionCourt",
+      "statement": "Each exact coarse effective action is projected onto a retained operator basis and candidate extensions are scored by action RSS and distribution KL.",
+      "operational_definition": "Use uniform-support least squares plus KL(P_exact||P_candidate).",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "RepeatedPushForwardFlow",
+      "depends_on": ["ExactRationalBlockMap", "FineEightSiteBoltzmannMeasure"],
+      "statement": "W_(k+1)=B_*W_k for the 8->4->2->1 sequence."
+    },
+    {
+      "name": "ScaleEffectiveAction",
+      "depends_on": ["RepeatedPushForwardFlow"],
+      "statement": "S_eff^(k)(y)=-log W_k(y) on each coarse support."
+    },
+    {
+      "name": "FlowGenome",
+      "depends_on": ["ScaleEffectiveAction", "ScaleWiseProjectionCourt"],
+      "statement": "Each scale records site count, support, partition, retained basis, coefficients, residuals, KL, candidate court, and identifiability."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T32",
+      "kind": "THEOREM",
+      "statement": "Repeated pair averaging equals direct group averaging exactly on all 6561 microscopic states for one, two, and three block steps.",
+      "depends_on": ["ExactRationalBlockMap"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_MULTISCALE_RG_FLOW_R1.md"]
+    },
+    {
+      "id": "T33",
+      "kind": "FINITE_RESULT",
+      "statement": "The finite push-forward flow preserves total partition weight and repeated push-forward agrees numerically with direct push-forward within declared tolerance.",
+      "depends_on": ["RepeatedPushForwardFlow", "T32"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_MULTISCALE_RG_FLOW_R1.md"]
+    },
+    {
+      "id": "T34",
+      "kind": "FINITE_RESULT",
+      "statement": "Every coarse level inherits global Z2 symmetry and its exact support-level effective action reconstructs pushed weights within declared tolerance.",
+      "depends_on": ["ScaleEffectiveAction", "T33"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_MULTISCALE_RG_FLOW_R1.md"]
+    },
+    {
+      "id": "N12",
+      "kind": "FINITE_NO_GO",
+      "statement": "The restricted retained base operator family is not exactly closed under the tested finite block flow.",
+      "depends_on": ["FlowGenome", "T34"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_MULTISCALE_RG_FLOW_R1.md"]
+    },
+    {
+      "id": "N13",
+      "kind": "FINITE_NO_GO",
+      "statement": "Candidate operator identifiability can depend on scale and finite support; M6 is redundant/singular at 4 sites but identifiable at coarser tested levels.",
+      "depends_on": ["FlowGenome"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_MULTISCALE_RG_FLOW_R1.md"]
+    },
+    {
+      "id": "T35",
+      "kind": "FINITE_RESULT",
+      "statement": "The best tested operator can depend on both scale and score functional.",
+      "depends_on": ["FlowGenome", "N13"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_MULTISCALE_RG_FLOW_R1.md"]
+    },
+    {
+      "id": "C13",
+      "kind": "CONJECTURE",
+      "statement": "A useful finite RG discovery engine can track scale-wise operator generation, identifiability, Pareto scores, and R11-compatible residual budgets before extrapolation to larger systems.",
+      "depends_on": ["T33", "T34", "N12", "N13", "T35"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "observables": [
+    {
+      "name": "SupportCount",
+      "definition": "Number of exact coarse states with nonzero pushed weight.",
+      "units": "count",
+      "domain": "finite multiscale flow"
+    },
+    {
+      "name": "ActionResidualRMS",
+      "definition": "Uniform-support RMS discrepancy between exact and projected effective action.",
+      "units": "action",
+      "domain": "finite coarse support"
+    },
+    {
+      "name": "DistributionKL",
+      "definition": "KL divergence from exact coarse probability to candidate Boltzmann distribution.",
+      "units": "dimensionless",
+      "domain": "finite coarse support"
+    }
+  ],
+  "scale_skeleton": [
+    {"level": 0, "sites": 8, "support": 6561},
+    {"level": 1, "sites": 4, "support": 625},
+    {"level": 2, "sites": 2, "support": 81},
+    {"level": 3, "sites": 1, "support": 17}
+  ],
+  "metadata": {
+    "purpose": "Construct and verify an exact finite multiscale block flow with scale-wise effective-action projection.",
+    "result": "EXACT_FINITE_MULTISCALE_FLOW_WITH_SCALE_LOCAL_OPERATOR_COURTS",
+    "pc_evidence_file": "research/omega_r14_pc_evidence.json",
+    "not_continuum_rg_validation": true,
+    "not_empirical_validation": true
+  }
+}
