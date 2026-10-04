@@ -17,8 +17,15 @@ class CouplingFlowGeometryTests(unittest.TestCase):
         self.assertEqual(r["step1_supports"], [625, 81])
         self.assertLessEqual(r["jacobian_level0_step_stability_rel"], 1e-4)
         self.assertLessEqual(r["jacobian_level1_step_stability_rel"], 1e-4)
-        self.assertGreater(abs(r["jacobian_level0_det"]), 1e-10)
+        self.assertEqual(
+            r["level0_identifiability"],
+            "RANK_DEFICIENT_BY_TERNARY_ALIAS_PHI4_EQ_PHI2",
+        )
+        self.assertLessEqual(r["level0_null_residual"], 1e-7)
+        self.assertLessEqual(r["level0_alias_column_error"], 1e-7)
+        self.assertGreater(r["jacobian_level0_condition_frobenius"], 1e8)
         self.assertGreater(abs(r["jacobian_level1_det"]), 1e-10)
+        self.assertLess(r["jacobian_level1_condition_frobenius"], 1e4)
         self.assertGreater(r["projection_closure_l2"], 1e-8)
 
     def test_alphabet_growth_is_exact(self):
@@ -45,6 +52,11 @@ class CouplingFlowGeometryTests(unittest.TestCase):
         for a, b in zip(params, got):
             self.assertAlmostEqual(a, b)
 
+    def test_ternary_alias_has_analytical_null_direction(self):
+        r = MODULE.verify()
+        self.assertEqual(tuple(r["level0_null_direction"]), (0.0, -0.5, 1.0))
+        self.assertLessEqual(r["level0_null_residual"], 1e-7)
+
     def test_fixed_point_boundary_is_explicit(self):
         r = MODULE.verify()
         self.assertEqual(
@@ -54,18 +66,18 @@ class CouplingFlowGeometryTests(unittest.TestCase):
 
     def test_eigenvalues_are_finite(self):
         r = MODULE.verify()
-        for level in ("eigen_level0", "eigen_level1"):
-            self.assertEqual(len(r[level]), 3)
-            for item in r[level]:
-                self.assertGreaterEqual(item["abs"], 0.0)
-                self.assertIn(
-                    item["classification"],
-                    {
-                        "EXPANDING_FINITE_STEP",
-                        "CONTRACTING_FINITE_STEP",
-                        "NEAR_UNIT_FINITE_STEP",
-                    },
-                )
+        self.assertEqual(r["eigen_level0_status"], "DO_NOT_INTERPRET_3D_EIGENMODES")
+        self.assertEqual(len(r["eigen_level1"]), 3)
+        for item in r["eigen_level1"]:
+            self.assertGreaterEqual(item["abs"], 0.0)
+            self.assertIn(
+                item["classification"],
+                {
+                    "EXPANDING_FINITE_STEP",
+                    "CONTRACTING_FINITE_STEP",
+                    "NEAR_UNIT_FINITE_STEP",
+                },
+            )
 
 
 if __name__ == "__main__":
