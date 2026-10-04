@@ -17,6 +17,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Effective-Theory Error Budget Results R1](docs/OMEGA_EFFECTIVE_ERROR_RESULTS_R1.md)
 - [Ω Lattice Phi4 Bridge Results R1](docs/OMEGA_LATTICE_PHI4_RESULTS_R1.md)
 - [Ω Effective-Action Discovery Results R1](docs/OMEGA_EFFECTIVE_ACTION_DISCOVERY_R1.md)
+- [Ω Multiscale RG Flow Results R1](docs/OMEGA_MULTISCALE_RG_FLOW_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -41,6 +42,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega R12 three-PC evidence](research/omega_r12_pc_evidence.json)
 - [Omega effective-action discovery model R1](research/omega_effective_action_model_r1.json)
 - [Omega R13 three-PC evidence](research/omega_r13_pc_evidence.json)
+- [Omega multiscale RG model R1](research/omega_multiscale_rg_model_r1.json)
+- [Omega R14 three-PC evidence](research/omega_r14_pc_evidence.json)
 
 ## Verification tools
 
@@ -55,6 +58,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_effective_error_budget.py`
 - `tools/verify_lattice_phi4_bridge.py`
 - `tools/verify_effective_action_discovery.py`
+- `tools/verify_multiscale_rg_flow.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -91,7 +95,12 @@ Proved toy-model results currently include:
 - an exact finite effective action S_eff=-log W reproduces the blocked measure on its support,
 - nested effective-operator spaces cannot worsen the optimal action-space least-squares residual,
 - the simple constant+M2+C1+M4 coarse ansatz is not exact on the R13 finite support,
-- operator rankings can differ between action-space residual and probability-space KL objectives.
+- operator rankings can differ between action-space residual and probability-space KL objectives,
+- exact rational block maps compose across the finite 8->4->2->1 flow,
+- finite push-forward preserves partition weight across every tested scale,
+- exact support-level effective actions inherit Z2 symmetry at every tested scale,
+- the restricted retained operator family is not exactly closed under the tested multiscale flow,
+- operator identifiability and ranking can change with scale as well as objective.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
