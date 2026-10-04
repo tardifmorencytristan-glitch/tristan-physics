@@ -1,0 +1,104 @@
+{
+  "id": "omega-operator-closure-court-r1",
+  "status": "FORMALIZED",
+  "primitives": [
+    {
+      "name": "CommonReferenceOperatorDomain",
+      "statement": "All candidate families are evaluated at the same five-value field alphabet, same reference base couplings, and zero added couplings.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "CompleteCandidateSubsetCourt",
+      "statement": "Every subset of m2_sq, m2_c1, delta4, and m6 is tested together with BASE_ONLY.",
+      "status": "AXIOM"
+    },
+    {
+      "name": "UnchangedAutonomyThresholds",
+      "statement": "R17 retains the R16 thresholds d_map<=0.05 and d_J<=0.10.",
+      "status": "AXIOM"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "ConditionalDerivativeIdentity",
+      "depends_on": ["CommonReferenceOperatorDomain"],
+      "statement": "For W_B=sum exp(-S_theta) over a block fiber, derivative of -log W_B with respect to theta_j equals the conditional expectation of F_j in that fiber."
+    },
+    {
+      "name": "FullSpaceAutonomyResidual",
+      "depends_on": ["CompleteCandidateSubsetCourt", "UnchangedAutonomyThresholds"],
+      "statement": "The full retained-coordinate map and Jacobian are compared between N=8->4 and N=4->2."
+    },
+    {
+      "name": "BaseBlockResidual",
+      "depends_on": ["FullSpaceAutonomyResidual"],
+      "statement": "The original kappa,mass2,lambda 3x3 Jacobian block is compared separately to attribute changes caused by added operators."
+    }
+  ],
+  "claims": [
+    {
+      "id": "T42",
+      "kind": "FINITE_RESULT",
+      "statement": "The R17 base-only formulation reproduces the R16 BOLTZMANN_M2_MATCH map and Jacobian discrepancies within declared numerical tolerances.",
+      "depends_on": ["CommonReferenceOperatorDomain", "FullSpaceAutonomyResidual"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md"]
+    },
+    {
+      "id": "T43",
+      "kind": "THEOREM",
+      "statement": "The derivative of the blocked effective target -log W_B with respect to an input coupling equals the conditional expectation of its feature within the block fiber.",
+      "depends_on": ["ConditionalDerivativeIdentity"],
+      "status": "PROVED",
+      "evidence_refs": ["docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md"]
+    },
+    {
+      "id": "T44",
+      "kind": "FINITE_RESULT",
+      "statement": "Adding delta4 reduces the physical base-block Jacobian discrepancy from about 0.20414 to about 0.18743, while worsening the full expanded Jacobian discrepancy.",
+      "depends_on": ["BaseBlockResidual", "T43"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md"]
+    },
+    {
+      "id": "N18",
+      "kind": "FINITE_NO_GO",
+      "statement": "No tested operator family passes the unchanged full map and Jacobian autonomy gates.",
+      "depends_on": ["CompleteCandidateSubsetCourt", "FullSpaceAutonomyResidual", "T42", "T43"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md"]
+    },
+    {
+      "id": "N19",
+      "kind": "FINITE_NO_GO",
+      "statement": "Improving effective-action fit residual does not guarantee improvement of the autonomous projected RG map.",
+      "depends_on": ["N18"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md"]
+    },
+    {
+      "id": "N20",
+      "kind": "FINITE_ATTRIBUTION",
+      "statement": "The dominant base-sector cross-size Jacobian mismatch is the response of mass2 and lambda outputs to kappa perturbations.",
+      "depends_on": ["BaseBlockResidual", "N18"],
+      "status": "VERIFIED",
+      "evidence_refs": ["docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md"]
+    },
+    {
+      "id": "C16",
+      "kind": "CONJECTURE",
+      "statement": "Gradient-amplitude mixed operators can reduce the kappa-driven cross-size Jacobian mismatch more effectively than the generic candidate set tested in R17.",
+      "depends_on": ["N20"],
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "metadata": {
+    "purpose": "Determine whether a complete finite court over four previously motivated effective operators closes the R16 cross-size Jacobian autonomy gap.",
+    "result": "NO_AUTONOMY_PASSING_FAMILY",
+    "parent_model": "omega-autonomous-rescaled-rg-r1",
+    "pc_evidence_file": "research/omega_r17_pc_evidence.json",
+    "not_continuum_rg_validation": true,
+    "not_empirical_validation": true
+  }
+}

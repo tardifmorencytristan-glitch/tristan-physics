@@ -1,0 +1,59 @@
+{
+  "status": "TARGETED_READ_BACK_VERIFIED_3PC",
+  "date": "2026-10-04",
+  "mission": "omega_r17_operator_closure",
+  "branch": "omega-r17-operator-closure-court",
+  "verification_head": "ff50c5ca4c3a3a914f7057d4088fc80450b299d3",
+  "common_result": {
+    "candidate_operators": ["m2_sq", "m2_c1", "delta4", "m6"],
+    "subset_count_including_baseline": 16,
+    "selection_status": "NO_AUTONOMY_PASSING_FAMILY",
+    "winner": "BASE_ONLY",
+    "baseline_map_relative_discrepancy": 0.04324247878887285,
+    "baseline_jacobian_relative_discrepancy": 0.20414221569466146,
+    "best_base_block_family": "BASE+delta4",
+    "best_base_block_jacobian_relative_discrepancy": 0.1874308212567953,
+    "best_base_block_full_jacobian_relative_discrepancy": 0.36499749666942183,
+    "m6_n8_fit_rms": 0.09910309438220476,
+    "m6_n4_fit_rms": 0.034936829179318056,
+    "m6_map_relative_discrepancy": 0.12213201088139856,
+    "dominant_jacobian_gap": {
+      "row": "mass2",
+      "column": "kappa",
+      "abs_gap": 0.3098599230797364
+    },
+    "second_jacobian_gap": {
+      "row": "lambda",
+      "column": "kappa",
+      "abs_gap": 0.24704081779054032
+    },
+    "finite_difference_n4_step_stability": 6.466331012533801e-10,
+    "analytic_vs_fd_n4": 1.341473633866872e-10,
+    "analytic_vs_fd_n8": 1.6136156650849165e-08,
+    "derivative_gate_pass": true,
+    "autonomy_gate_pass": false,
+    "fixed_point_status": "BLOCKED_NONAUTONOMOUS_OPERATOR_CLOSURE",
+    "singular_or_redundant_family_count": 2
+  },
+  "devices": [
+    {
+      "device": "DESKTOP-SHA9IHL",
+      "role": "GENERATOR_FORGE",
+      "dag": "PASS_13_NODES_ACYCLIC",
+      "r17_targeted_tests": {"passed": 7, "failed": 0, "exit_code": 0}
+    },
+    {
+      "device": "DESKTOP-2G1SSMT",
+      "role": "OAK_INTEGRATOR",
+      "dag": "PASS_13_NODES_ACYCLIC",
+      "r17_targeted_tests": {"passed": 7, "failed": 0, "exit_code": 0}
+    },
+    {
+      "device": "LAPTOP-AIU36QN6",
+      "role": "INDEPENDENT_VERIFIER",
+      "dag": "PASS_13_NODES_ACYCLIC",
+      "r17_targeted_tests": {"passed": 7, "failed": 0, "exit_code": 0}
+    }
+  ],
+  "scientific_boundary": "Finite lattice operator-closure court at one declared reference point; not continuum RG, fixed points, beta functions, universal critical exponents, or empirical particle physics."
+}

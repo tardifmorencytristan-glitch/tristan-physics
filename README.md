@@ -20,6 +20,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Ω Multiscale RG Flow Results R1](docs/OMEGA_MULTISCALE_RG_FLOW_R1.md)
 - [Ω Coupling-Flow Geometry Results R1](docs/OMEGA_COUPLING_FLOW_GEOMETRY_R1.md)
 - [Ω Autonomous Rescaled RG Results R1](docs/OMEGA_AUTONOMOUS_RESCALED_RG_R1.md)
+- [Ω Operator-Closure Court Results R1](docs/OMEGA_OPERATOR_CLOSURE_COURT_R1.md)
 - [Ω Primitive Candidate Lattice R1](docs/OMEGA_CANDIDATE_LATTICE_R1.md)
 - [Ω Falsification & Ablation Protocol R1](docs/FALSIFICATION_PROTOCOL_R1.md)
 - [Ω Experiment Decision Engine R1](docs/EXPERIMENT_DECISION_ENGINE_R1.md)
@@ -50,6 +51,8 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - [Omega R15 three-PC evidence](research/omega_r15_pc_evidence.json)
 - [Omega autonomous rescaled RG model R1](research/omega_autonomous_rg_model_r1.json)
 - [Omega R16 three-PC evidence](research/omega_r16_pc_evidence.json)
+- [Omega operator-closure model R1](research/omega_operator_closure_model_r1.json)
+- [Omega R17 three-PC evidence](research/omega_r17_pc_evidence.json)
 
 ## Verification tools
 
@@ -67,6 +70,7 @@ Public-safe physics models, detectors, circuits, electromagnetic research, and r
 - `tools/verify_multiscale_rg_flow.py`
 - `tools/verify_coupling_flow_geometry.py`
 - `tools/verify_autonomous_rescaled_rg.py`
+- `tools/verify_operator_closure_court.py`
 - `.github/workflows/omega-formal-gates.yml`
 
 ## Current formal boundary
@@ -117,7 +121,11 @@ Proved toy-model results currently include:
 - explicit field-rescaling gauges can reduce cross-size projected-map discrepancy on a common reference alphabet,
 - Boltzmann second-moment matching is the best tested R16 map-level normalization at the declared reference point,
 - map-level cross-size agreement does not imply Jacobian-level autonomy,
-- the R16 fixed-point gate remains blocked because the winning normalization fails the declared Jacobian-autonomy threshold.
+- the R16 fixed-point gate remains blocked because the winning normalization fails the declared Jacobian-autonomy threshold,
+- a complete 16-family R17 court over m2_sq, m2_c1, delta4, and m6 contains no autonomy-passing family under unchanged R16 thresholds,
+- delta4 improves the original physical 3x3 Jacobian sub-block while worsening the full expanded-space Jacobian,
+- lower effective-action fit residual does not guarantee a more autonomous projected RG map,
+- the dominant remaining cross-size Jacobian mismatch is concentrated in kappa-driven mixing into mass2 and lambda.
 
 These are mathematical results about abstract toy structures. They are **not empirical validation of a fundamental physical theory**.
 
