@@ -1,23 +1,39 @@
 {
-  "status": "READ_BACK_VERIFIED_3PC",
+  "status": "EXECUTABLE_PAYLOAD_READ_BACK_VERIFIED_3PC__FINAL_FEATURE_HEAD_GITHUB_CI_VERIFIED",
   "date": "2026-10-04",
   "mission": "omega_r14_multiscale_rg_flow",
   "branch": "omega-r14-multiscale-rg-flow",
   "verification_head": "8413128b1f3bcfd28798ac93d36d8a6db3fdb006",
   "common_result": {
     "fine_configuration_count": 6561,
-    "support_counts": [6561, 625, 81, 17],
+    "support_counts": [
+      6561,
+      625,
+      81,
+      17
+    ],
     "map_composition_failures": 0,
     "fine_partition_function": 14.896897569403215,
-    "partition_differences": [0.0, 0.0, 0.0, 0.0],
-    "direct_pushforward_max_errors": [0.0, 5.551115123125783e-17, 2.220446049250313e-16],
+    "partition_differences": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "direct_pushforward_max_errors": [
+      0,
+      5.551115123125783e-17,
+      2.220446049250313e-16
+    ],
     "level1": {
       "sites": 4,
       "base_rms": 0.17910267673269592,
       "base_kl": 0.005304213422490202,
       "best_action_candidate": "m2_sq",
       "best_kl_candidate": "m2_c1",
-      "redundant_candidates": ["m6"]
+      "redundant_candidates": [
+        "m6"
+      ]
     },
     "level2": {
       "sites": 2,
@@ -39,18 +55,52 @@
     {
       "device": "DESKTOP-SHA9IHL",
       "role": "GENERATOR_FORGE",
-      "tests": {"passed": 49, "failed": 0, "exit_code": 0}
+      "tests": {
+        "passed": 49,
+        "failed": 0,
+        "exit_code": 0
+      }
     },
     {
       "device": "DESKTOP-2G1SSMT",
       "role": "OAK_INTEGRATOR",
-      "tests": {"passed": 49, "failed": 0, "exit_code": 0}
+      "tests": {
+        "passed": 49,
+        "failed": 0,
+        "exit_code": 0
+      }
     },
     {
       "device": "LAPTOP-AIU36QN6",
       "role": "INDEPENDENT_VERIFIER",
-      "tests": {"passed": 49, "failed": 0, "exit_code": 0}
+      "tests": {
+        "passed": 49,
+        "failed": 0,
+        "exit_code": 0
+      }
     }
   ],
-  "boundary": "Finite lattice formal/software verification only; not continuum RG, continuum QFT, or empirical particle-physics validation."
+  "boundary": "Finite lattice formal/software verification only; not continuum RG, continuum QFT, or empirical particle-physics validation.",
+  "proof_boundary": {
+    "exact_3pc_verification_head": "8413128b1f3bcfd28798ac93d36d8a6db3fdb006",
+    "final_feature_head": "b1059be5e3a7196c60da042f495db3274101e612",
+    "merged_main_commit": "3711b31827ad09bf5092555058c1b872760c6550",
+    "commits_after_exact_3pc_head": 5,
+    "changed_after_exact_3pc_head": [
+      ".github/workflows/omega-formal-gates.yml",
+      "README.md",
+      "docs/OMEGA_MULTISCALE_RG_FLOW_R1.md",
+      "research/omega_multiscale_rg_model_r1.json",
+      "research/omega_r14_pc_evidence.json"
+    ],
+    "verifier_or_test_implementation_changed_after_exact_3pc_head": false,
+    "final_feature_head_github_ci": {
+      "workflow": "Omega Formal Gates",
+      "run_id": 37202493121,
+      "conclusion": "success"
+    },
+    "exact_whole_final_feature_head_3pc_verified": false,
+    "classification": "ExecutablePayload3PCVerified + FinalFeatureHeadGitHubCIVerified",
+    "invariant": "ClaimScope<=EvidenceScope"
+  }
 }
