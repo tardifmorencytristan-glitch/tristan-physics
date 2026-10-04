@@ -50,6 +50,24 @@ class OperatorClosureCourtTests(unittest.TestCase):
             r["winner"]["autonomy_ratio"] + 1e-12,
         )
 
+    def test_observed_no_go_is_locked(self):
+        r = MODULE.verify()
+        self.assertEqual(r["selection_status"], "NO_AUTONOMY_PASSING_FAMILY")
+        self.assertEqual(r["winner"]["label"], "BASE_ONLY")
+        self.assertEqual(r["best_base_block_family"]["label"], "BASE+delta4")
+        singular = [x for x in r["court"] if x["status"] != "FIT"]
+        self.assertEqual(len(singular), 2)
+        self.assertLess(
+            r["best_base_block_family"]["base_block_jacobian_relative_discrepancy"],
+            r["baseline_reproduction"]["r17_base_jacobian_relative_discrepancy"],
+        )
+
+    def test_dominant_baseline_gap_is_kappa_to_mass(self):
+        r = MODULE.verify()
+        top = r["baseline_top_jacobian_gaps"][0]
+        self.assertEqual((top["row"], top["column"]), ("mass2", "kappa"))
+        self.assertGreater(top["abs_gap"], 0.30)
+
     def test_fixed_point_gate_is_consistent(self):
         r = MODULE.verify()
         if r["autonomy_gate_pass"]:
